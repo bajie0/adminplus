@@ -1,0 +1,45 @@
+/* ----------⭐⭐⭐全局scss主题变量⭐⭐⭐---------- */
+/* 主色(页面70%以上的颜色) */
+$main-color: #0291ff;
+/* 辅助色--基本辅助色(页面10%以上的颜色) */
+$assist-color: #262626;
+/* 辅助色--警告色(用于醒目的提示) */
+$warning-color: #dd524d;
+/* 多色彩配色(增强页面色彩丰富度)*/
+$match-color-A:#aaffff;
+$match-color-B:#ffff7f;
+$match-color-C:#55aaff;
+$match-color-D:#aa557f;
+
+/* 文字颜色 (黑色系) */
+$text-color: #303133;
+/* 边框颜色 (灰色系) */
+$border-color: #c3c3c3;
+
+/* 页面背景颜色（页面背景） */
+$page-color: #f3f4f6;
+
+/* 极致色,也叫纯黑或纯白 (默认白) */
+/* 文字极致色 */
+$extreme-text-color: #ffffff;
+/* 边框极致色 */
+$extreme-border-color: #ffffff;
+/* 填充极致色 */
+$extreme-fill-color: #ffffff;
+
+:export {
+	mainColor:$main-color;
+	assistColor:$assist-color;
+	warningColor:$warning-color;
+	matchColorA:$match-color-A;
+	matchColorB:$match-color-B;
+	matchColorC:$match-color-C;
+	matchColorD:$match-color-D;
+	// 此处为textColors,加了一个s是为了避免和element组件里的props冲突
+	textColors:$text-color;
+	borderColors:$border-color;
+	pageColor:$page-color;
+	extremeTextColor:$extreme-text-color;
+	extremeBorderColor:$extreme-border-color;
+	extremeFillColor:$extreme-fill-color;
+}

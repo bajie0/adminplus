@@ -1,0 +1,56 @@
+// 引入全局主题theme.scss
+@import './theme.scss';
+// element组件样式调整
+.el-button:hover{
+	background-color: mix(#ffffff, $main-color , 10%)!important;
+	color: $extreme-text-color!important;
+}
+.el-button:focus{
+	background-color:$main-color!important;
+	color: $extreme-text-color!important;
+}
+.el-button--primary.is-plain{
+	font-size: 10px;
+	padding: 0 10px;
+	border-color: mix(#ffffff, $main-color , 75%)!important;
+	background-color: mix(#ffffff, $main-color , 97%)!important;
+	color:mix(#ffffff, $main-color , 40%)!important;
+}
+.el-button--primary.is-plain:focus, .el-button--primary.is-plain:hover{
+	color: mix(#000000, $main-color , 40%)!important;
+	border-color: mix(#ffffff, $main-color , 50%)!important;
+}
+.el-input__inner:focus{
+	border-color:$main-color!important;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active{
+	background-color:$main-color!important;
+}
+.el-switch.is-checked .el-switch__core{
+	border-color:$main-color!important;
+	background-color:$main-color!important;
+}
+.el-tabs__item:hover{
+	background-color: $page-color;
+	color:$main-color;
+}
+.el-checkbox__input.is-checked .el-checkbox__inner,.el-checkbox__input.is-indeterminate .el-checkbox__inner{
+	background-color:$main-color!important;
+}
+.el-checkbox.is-bordered.is-checked{
+	border-color:$main-color!important;
+}
+.el-checkbox__input.is-checked+.el-checkbox__label{
+	color:$main-color!important;
+}
+.el-icon svg{
+	font-size: 25px;
+	transform: translateY(6px);
+}
+.el-upload-list{
+	display: none;
+}
+.el-sub-menu .el-menu-item{
+	height: 56px!important;
+	line-height: 56px!important;
+}

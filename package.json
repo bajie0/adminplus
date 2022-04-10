@@ -1,0 +1,33 @@
+{
+  "name": "admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve --open",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@jsdawn/vue3-tinymce": "^1.1.6",
+    "animate.css": "^4.1.1",
+    "axios": "^0.24.0",
+    "core-js": "^3.6.5",
+    "element-plus": "^1.1.0-beta.24",
+    "js-pinyin": "^0.1.9",
+    "mitt": "^3.0.0",
+    "qs": "^6.10.1",
+    "screenfull": "^5.1.0",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0",
+    "websocket-heartbeat-js": "^1.0.13"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.2"
+  }
+}

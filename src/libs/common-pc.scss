@@ -1,0 +1,1425 @@
+/* common.css for pc   Author:xiaojie    version:2.3.2 */
+// 注意:之前的css版本将全面迁移至scss版本,css版本将不再进行维护。
+// pc版本与uniapp和原生vue版同步更新
+// pc上建议不要使用自适应布局,这样能让更大的设备能显示更多的内容,而不是放大显示，所以px是首选的布局单位
+
+/* ----------⭐⭐⭐全局scss主题变量⭐⭐⭐---------- */
+@import './theme.scss';
+
+/* ----------初始化页面---------- */
+/* ----初始化滚动条---- */
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+	width:10px;
+	height: 10px;
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+	border-radius:10px;
+	background:mix(#ffffff, $border-color , 75%);
+	box-shadow:0 0 5px mix(#ffffff, $border-color , 50%) inset;
+}
+::-webkit-scrollbar-thumb:hover {
+	border-radius:10px;
+	background:mix(#ffffff, $border-color , 50%);
+	box-shadow:0 0 10px mix(#ffffff, $border-color , 50%) inset;
+}
+
+/* 全局hover */
+/* 普通效果 */
+.hover{
+	transition: .4s;
+}
+.hover:hover{
+	cursor: pointer;
+	transform: translateY(-4px);
+	@extend .boxshadow-light-30;
+}
+/* 轻微效果(适用于较小的元素) */
+.hover-sm{
+	transition: .4s;
+}
+.hover-sm:hover{
+	cursor: pointer;
+	transform: translateY(-2px);
+	@extend .boxshadow-light-10;
+}
+
+/* 初始化图片对齐方式 */
+img {
+	vertical-align: middle;
+}
+
+/* 初始化元素设置 */
+* {
+	// 初始化元素间距
+	margin: 0;
+	padding: 0;
+	// 固定盒子
+	box-sizing: border-box;
+	// 禁用文本选择
+	// user-select: none;
+}
+
+/* 元素高度 */
+/* ⭐注意:使用的时候直接跟值(10的倍数，可取0)，后面没有短横线。有短横线的是响应式布局容器 */
+@for $i from 0 through 108 {
+	:root .height#{$i * 10} {
+		height: $i * 10 + px;
+	}
+}
+/* 元素宽度 */
+/* ⭐注意:使用的时候直接跟值(10的倍数，可取0)，后面没有短横线。有短横线的是响应式布局容器 */
+@for $i from 0 through 192 {
+	:root .width#{$i * 10} {
+		width: $i * 10 + px;
+	}
+}
+/* 元素最小宽度 */
+/* ⭐注意:使用的时候直接跟值(10的倍数) */
+@for $i from 1 through 140 {
+	:root .min-width#{$i * 10} {
+		min-width: $i * 10 + px;
+	}
+}
+/* 元素最小高度 */
+/* ⭐注意:使用的时候直接跟值(10的倍数) */
+@for $i from 1 through 70 {
+	:root .min-height#{$i * 10} {
+		min-height: $i * 10 + px;
+	}
+}
+/* 填满父元素的高度 */
+.h100{
+	height: 100%;
+}
+
+/* ------------------------------文字处理类------------------------------ */
+/* 将源码中的折行记作一行(保留换行) 免块级标签 */
+.keep-line {
+	white-space: pre-line;
+}
+
+/* ----------文本超出盒子宽度显示省略号...---------- */
+.ellipsis-1 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.ellipsis-2 {
+    -webkit-line-clamp: 2;
+}
+
+.ellipsis-3 {
+    -webkit-line-clamp: 3;
+}
+
+.ellipsis-4 {
+    -webkit-line-clamp: 4;
+}
+
+.ellipsis-5 {
+    -webkit-line-clamp: 5;
+}
+
+.ellipsis-2, .ellipsis-3, .ellipsis-4, .ellipsis-5 {
+    overflow: hidden;
+	word-break: break-all;
+    text-overflow: ellipsis; 
+    display: -webkit-box; // 弹性伸缩盒
+    -webkit-box-orient: vertical; // 设置伸缩盒子元素排列方式
+}
+
+/* 文字对齐 */
+.tc {
+	text-align: center;
+}
+
+.tr {
+	text-align: right;
+}
+
+.tl {
+	text-align: left;
+}
+
+.tj{
+	text-align: justify;	
+}
+
+/* 文字加粗 */
+.text-weight {
+	font-weight: 600;
+}
+
+/* 文字大小 */
+@for $i from 10 through 100 {
+	.font-#{$i} {
+		font-size: $i + px;
+	}
+}
+/* 文字间距 */
+@for $i from 1 through 20 {
+	.text-space-#{$i} {
+		letter-spacing: $i + px;
+		padding-left: $i + px;
+	}
+}
+/* 文字行高(行间距) */
+@for $i from 0 through 20 {
+	.line-height-#{$i} {
+		/* line-height-0可以清除行高,有时候可以达到对齐异常快速修正的效果 */
+		line-height: 1 + $i / 10;
+	}
+}
+
+
+/* --------------------⭐⭐⭐⭐主题样式⭐⭐⭐⭐-------------------- */
+/* ------------⭐⭐ 1.盒子主题 ⭐⭐------------ */
+/* --------⭐填充色(fill)⭐-------- */
+/* ----用主色来填充---- */
+body .fill-color-main{
+	background-color: $main-color;
+}
+/* ----用辅助色来填充---- */
+body .fill-color-assist{
+	background-color: $assist-color;
+}
+/* ----用警告色来填充---- */
+body .fill-color-warning{
+	background-color: $warning-color;
+}
+/* ----用配色来填充---- */
+body .fill-color-matchA{
+	background-color: $match-color-A;
+}
+body .fill-color-matchB{
+	background-color: $match-color-B;
+}
+body .fill-color-matchC{
+	background-color: $match-color-C;
+}
+body .fill-color-matchD{
+	background-color: $match-color-D;
+}
+/* ----用白色来填充---- */
+body .fill-color-white{
+	background-color: $extreme-fill-color;
+}
+/* ----以背景色作为色块填充色---- */
+// 在移动端较常用，通常用作点击以后的效果，pc端主要用于子路由组件(页面)的背景
+body .fill-color-page{
+	background-color: $page-color;
+}
+
+/* --------⭐边框色(border)⭐-------- */
+/* ----用主色做边框色---- */
+body .border-color-main{
+	border-color: $main-color;
+}
+/* ----用辅助色做边框色---- */
+body .border-color-assist{
+	border-color: $assist-color;
+}
+/* ----用警告色做边框色---- */
+body .border-color-warning{
+	border-color: $warning-color;
+}
+/* ----用配色做边框色---- */
+body .border-color-matchA{
+	border-color: $match-color-A;
+}
+body .border-color-matchB{
+	border-color: $match-color-B;
+}
+body .border-color-matchC{
+	border-color: $match-color-C;
+}
+body .border-color-matchD{
+	border-color: $match-color-D;
+}
+/* ----用白色做边框色---- */
+body .border-color-white{
+	border-color: $extreme-border-color;
+}
+
+/* ------------⭐⭐ 2.文字主题 ⭐⭐------------ */
+/* 一般文字只有填充前景色即文字的颜色 */
+/* --------⭐文字颜色(text)⭐-------- */
+/* ----用主色做文字颜色---- */
+.text-color-main{
+	color: $main-color;
+}
+/* ----用辅助色做文字颜色---- */
+.text-color-assist{
+	color: $assist-color;
+}
+/* ----用警告色做文字颜色---- */
+.text-color-warning{
+	color: $warning-color;
+}
+/* ----用配色做文字颜色---- */
+.text-color-matchA{
+	color: $match-color-A;
+}
+.text-color-matchB{
+	color: $match-color-B;
+}
+.text-color-matchC{
+	color: $match-color-C;
+}
+.text-color-matchD{
+	color: $match-color-D;
+}
+/* ----用白色做文字颜色---- */
+.text-color-white{
+	color: $extreme-text-color;
+}
+
+/* 正常文字颜色 (共4个等级) */
+.text-color-black-dark{
+	color: mix(#ffffff, $text-color , 0%);
+}
+.text-color-black-middle{
+	color: mix(#ffffff, $text-color , 24%);
+}
+
+.text-color-black-light{
+	color: mix(#ffffff, $text-color , 48%);
+}
+
+.text-color-black-lighter{
+	color: mix(#ffffff, $text-color , 72%);
+}
+
+/* ------------⭐⭐ 3.页面背景主题 (page)⭐⭐------------ */
+/* 通常每一页的背景采用淡灰色 */
+.page-color{
+	background-color: $page-color;
+	@extend .clearfix;
+	min-height: 100vh;
+}
+/* 纯白色背景 */
+.page-color-white{
+	background-color: $extreme-fill-color;
+	@extend .clearfix;
+	min-height: 100vh;
+}
+
+
+/* 元素边框(四边) */
+@for $i from 1 through 10 {
+	/* 深色边框 */
+	.border-around-dark-#{$i} {
+		border: $i + px solid mix(#ffffff, $border-color , 0%);
+	}
+	/* 中色边框 */
+	.border-around-middle-#{$i} {
+		border: $i + px solid mix(#ffffff, $border-color , 25%);
+	}
+	/* 浅色边框 */
+	.border-around-light-#{$i} {
+		border: $i + px solid mix(#ffffff, $border-color , 50%);
+	}
+	/* 更浅色边框 */
+	.border-around-lighter-#{$i} {
+		border: $i + px solid mix(#ffffff, $border-color , 75%);
+	}
+}
+
+/* 元素单边边框 */
+/* 上边 */
+@for $i from 1 through 10 {
+	/* 深色 */
+	.border-top-dark-#{$i} {
+		border-top: $i + px solid mix(#ffffff, $border-color , 0%);
+	}
+	/* 中色 */
+	.border-top-middle-#{$i} {
+		border-top: $i + px solid mix(#ffffff, $border-color , 25%);
+	}
+	/* 浅色 */
+	.border-top-light-#{$i} {
+		border-top: $i + px solid mix(#ffffff, $border-color , 50%);
+	}
+	/* 更浅色 */
+	.border-top-lighter-#{$i} {
+		border-top: $i + px solid mix(#ffffff, $border-color , 75%);
+	}
+}
+/* 下边 */
+@for $i from 1 through 10 {
+	/* 深色 */
+	.border-bottom-dark-#{$i} {
+		border-bottom: $i + px solid mix(#ffffff, $border-color , 0%);
+	}
+	/* 中色 */
+	.border-bottom-middle-#{$i} {
+		border-bottom: $i + px solid mix(#ffffff, $border-color , 25%);
+	}
+	/* 浅色 */
+	.border-bottom-light-#{$i} {
+		border-bottom: $i + px solid mix(#ffffff, $border-color , 50%);
+	}
+	/* 更浅色 */
+	.border-bottom-lighter-#{$i} {
+		border-bottom: $i + px solid mix(#ffffff, $border-color , 75%);
+	}
+}
+/* 左边 */
+@for $i from 1 through 10 {
+	/* 深色 */
+	.border-left-dark-#{$i} {
+		border-left: $i + px solid mix(#ffffff, $border-color , 0%);
+	}
+	/* 中色 */
+	.border-left-middle-#{$i} {
+		border-left: $i + px solid mix(#ffffff, $border-color , 25%);
+	}
+	/* 浅色 */
+	.border-left-light-#{$i} {
+		border-left: $i + px solid mix(#ffffff, $border-color , 50%);
+	}
+	/* 更浅色 */
+	.border-left-lighter-#{$i} {
+		border-left: $i + px solid mix(#ffffff, $border-color , 75%);
+	}
+}
+/* 右边 */
+@for $i from 1 through 10 {
+	/* 深色 */
+	.border-right-dark-#{$i} {
+		border-right: $i + px solid mix(#ffffff, $border-color , 0%);
+	}
+	/* 中色 */
+	.border-right-middle-#{$i} {
+		border-right: $i + px solid mix(#ffffff, $border-color , 25%);
+	}
+	/* 浅色 */
+	.border-right-light-#{$i} {
+		border-right: $i + px solid mix(#ffffff, $border-color , 50%);
+	}
+	/* 更浅色 */
+	.border-right-lighter-#{$i} {
+		border-right: $i + px solid mix(#ffffff, $border-color , 75%);
+	}
+}
+
+/* ⭐选中和禁选的主题类⭐ */
+/* 色块填充色(选中) */
+body {	
+	.fill-active-main{
+		background-color: mix(#000000, $main-color , 40%);
+	}
+	.fill-active-assist{
+		background-color: mix(#000000, $assist-color , 40%);
+	}
+	.fill-active-warning{
+		background-color: mix(#000000, $warning-color , 40%);
+	}
+	.fill-active-matchA{
+		background-color: mix(#000000, $match-color-A , 40%);
+	}
+	.fill-active-matchB{
+		background-color: mix(#000000, $match-color-B , 40%);
+	}
+	.fill-active-matchC{
+		background-color: mix(#000000, $match-color-C , 40%);
+	}
+	.fill-active-matchD{
+		background-color: mix(#000000, $match-color-D , 40%);
+	}
+}
+/* 色块填充色(禁选) */
+body {
+	.fill-disabled-main{
+		background-color: mix(#ffffff, $main-color , 70%);
+	}
+	.fill-disabled-assist{
+		background-color: mix(#ffffff, $assist-color , 70%);
+	}
+	.fill-disabled-warning{
+		background-color: mix(#ffffff, $warning-color , 70%);
+	}
+	.fill-disabled-matchA{
+		background-color: mix(#ffffff, $match-color-A , 70%);
+	}
+	.fill-disabled-matchB{
+		background-color: mix(#ffffff, $match-color-B , 70%);
+	}
+	.fill-disabled-matchC{
+		background-color: mix(#ffffff, $match-color-C , 70%);
+	}
+	.fill-disabled-matchD{
+		background-color: mix(#ffffff, $match-color-D , 70%);
+	}
+}
+/* 边框描边色(选中) */
+body {
+	.border-active-main{
+		border-color: mix(#000000, $main-color , 40%);
+	}
+	.border-active-assist{
+		border-color: mix(#000000, $assist-color , 40%);
+	}
+	.border-active-warning{
+		border-color: mix(#000000, $warning-color , 40%);
+	}
+	.border-active-matchA{
+		border-color: mix(#000000, $match-color-A , 40%);
+	}
+	.border-active-matchB{
+		border-color: mix(#000000, $match-color-B , 40%);
+	}
+	.border-active-matchC{
+		border-color: mix(#000000, $match-color-C , 40%);
+	}
+	.border-active-matchD{
+		border-color: mix(#000000, $match-color-D , 40%);
+	}
+}
+/* 边框描边色(禁选) */
+body {
+	.border-disabled-main{
+		border-color: mix(#ffffff, $main-color , 70%);
+	}
+	.border-disabled-assist{
+		border-color: mix(#ffffff, $assist-color , 70%);
+	}
+	.border-disabled-warning{
+		border-color: mix(#ffffff, $warning-color , 70%);
+	}
+	.border-disabled-matchA{
+		border-color: mix(#ffffff, $match-color-A , 70%);
+	}
+	.border-disabled-matchB{
+		border-color: mix(#ffffff, $match-color-B , 70%);
+	}
+	.border-disabled-matchC{
+		border-color: mix(#ffffff, $match-color-C , 70%);
+	}
+	.border-disabled-matchD{
+		border-color: mix(#ffffff, $match-color-D , 70%);
+	}
+}
+/* 文字颜色(选中) */
+body {
+	.text-active-main{
+		color: mix(#000000, $main-color , 40%);
+	}
+	.text-active-assist{
+		color: mix(#000000, $assist-color , 40%);
+	}
+	.text-active-warning{
+		color: mix(#000000, $warning-color , 40%);
+	}
+	.text-active-matchA{
+		color: mix(#000000, $match-color-A , 40%);
+	}
+	.text-active-matchB{
+		color: mix(#000000, $match-color-B , 40%);
+	}
+	.text-active-matchC{
+		color: mix(#000000, $match-color-C , 40%);
+	}
+	.text-active-matchD{
+		color: mix(#000000, $match-color-D , 40%);
+	}
+}
+/* 文字颜色(禁选) */
+body {
+	.text-disabled-main{
+		color: mix(#ffffff, $main-color , 70%);
+	}
+	.text-disabled-assist{
+		color: mix(#ffffff, $assist-color , 70%);
+	}
+	.text-disabled-warning{
+		color: mix(#ffffff, $warning-color , 70%);
+	}
+	.text-disabled-matchA{
+		color: mix(#ffffff, $match-color-A , 70%);
+	}
+	.text-disabled-matchB{
+		color: mix(#ffffff, $match-color-B , 70%);
+	}
+	.text-disabled-matchC{
+		color: mix(#ffffff, $match-color-C , 70%);
+	}
+	.text-disabled-matchD{
+		color: mix(#ffffff, $match-color-D , 70%);
+	}
+}
+
+/* 测试用边框 */
+.border {
+	border: #656565 1px solid;
+}
+
+/* ------------------------------滚动容器------------------------------ */
+.scroll-x {
+	display: flex;
+	overflow: auto;
+}
+.scroll-x > *{
+	flex:none
+}
+
+/* ------------------------------布局类------------------------------ */
+/* ----浮动布局---- */
+/* 清除浮动 */
+.clearfix::before,.clearfix::after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+/* 页面元素水平居中,需配合width类使用 */
+.center {
+	float: none;
+	margin: 0 auto;
+	display: block;
+}
+
+/* 定位居中法 */
+.positionbox {
+	position: relative;
+}
+
+.positionbox .pcenter {
+	/* 2个类才生效 */
+	position: absolute;
+	z-index: 9;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+/* 定位只垂直居中并靠左对齐 */
+.positionbox .pleft {
+	/* 2个类才生效 */
+	position: absolute;
+	z-index: 9;
+	top: 50%;
+	left: 0;
+	transform: translate(0, -50%);
+}
+
+/* 定位只垂直居中并靠右对齐 */
+.positionbox .pright {
+	/* 2个类才生效 */
+	position: absolute;
+	z-index: 9;
+	top: 50%;
+	right: 0;
+	transform: translate(0, -50%);
+}
+
+/* 定位只垂直居中并靠顶部对齐 */
+.positionbox .ptop {
+	/* 2个类才生效 */
+	position: absolute;
+	z-index: 9;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+/* 定位只垂直居中并靠底部对齐 */
+.positionbox .pbottom {
+	/* 2个类才生效 */
+	position: absolute;
+	z-index: 9;
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+/* 4角定位 */
+/* ps:所有定位均遵循先左右(水平)后上下(垂直) */
+.positionbox .plt {
+	/* 左上 */
+	position: absolute;
+	z-index: 9;
+	top: 0;
+	left: 0;
+}
+
+.positionbox .prt {
+	/* 右上 */
+	position: absolute;
+	z-index: 9;
+	top: 0;
+	right: 0;
+}
+
+.positionbox .plb {
+	/* 左下 */
+	position: absolute;
+	z-index: 9;
+	bottom: 0;
+	left: 0;
+}
+
+.positionbox .prb {
+	/* 右下 */
+	position: absolute;
+	z-index: 9;
+	bottom: 0;
+	right: 0;
+}
+
+/* 4角窗体定位（固定） */
+/* 注:固定定位后,元素可以放在页面结构的任意位置 */
+.fixed-lt {
+	/* 左上 */
+	position: fixed;
+	z-index: 9;
+	top: 0;
+	left: 0;
+}
+
+.fixed-rt {
+	/* 右上 */
+	position: fixed;
+	z-index: 9;
+	top: 0;
+	right: 0;
+}
+
+.fixed-lb {
+	/* 左下 */
+	position: fixed;
+	z-index: 9;
+	bottom: 0;
+	left: 0;
+}
+
+.fixed-rb {
+	/* 右下 */
+	position: fixed;
+	z-index: 9;
+	bottom: 0;
+	right: 0;
+}
+
+/* 粘性定位到顶部 */
+.sticky-top{
+	position: sticky;
+	top: 0;
+	z-index: 9999;
+}
+
+/*万能居中flex布局*/
+.inner-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.inner-justify {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.inner-left {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.inner-right {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.inner-column-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+/*****块级div从左到右依次排列（含折行）*****/
+.flex-z {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	align-content: flex-start;
+}
+
+/**换行**/
+.wrap {
+	flex-wrap: wrap;
+}
+
+/* flex-z的修正类 与flex-z配套使用*/
+.nowrap {
+	/**不换行，用于解除flex-z的自然换行**/
+	flex-wrap: nowrap;
+}
+
+.justify {
+	/**用于flex-z以后依然可以两端对齐**/
+	justify-content: space-between;
+}
+
+/* 用于快速生成一个文字菜单条(需在flex盒上使用)*/
+/* 注意:菜单项非均等分,比较适合纯文字菜单项的布局,如希望每个菜单项等分,需要(在每一个菜单项)使用flex1类 */
+.flex-menu{
+	display: flex;
+	> div,span{
+		flex: auto;
+		@extend .border-right-dark-1;
+		margin: 10px 0;
+		text-align: center;
+		&:last-child{
+			border-right: none;
+		}
+	}
+}
+
+/* 用于铺满一行剩余的空间 (弹性伸缩)，2.1.2已废弃*/
+// .flex-fit{
+// 	flex: auto;
+// }
+
+/* 用于铺满一行剩余的空间 (非弹性伸缩)*/
+.flex1{
+	flex: 1;
+	overflow: hidden;
+}
+.flex1:hover{
+	overflow: auto;
+}
+
+/* ⭐固定flex项 使flex项失去弹性 用于取消弹性伸缩（可能会横向溢出外盒）*/
+/* 利用这个特性可以免设置display:inline-flex和white-space:pre-wrap这两个属性就可以达到横向溢出 */
+.flex-fixed{
+	flex:none
+}
+/* 单个调整flex项的纵向布局 */
+.self-top{
+	align-self: flex-start;
+}
+.self-center{
+	align-self: center;
+}
+.self-bottom{
+	align-self: flex-end;
+}
+/* 生成纵向flex盒 */
+.flex-column{
+	display: flex;
+	flex-direction: column;
+}
+/* 修复高度 让flex项上下拉伸以撑满父容器 多用于创建布局盒子 */
+.stretch{
+	align-items: stretch;
+}
+
+/* ****布局盒子宽度/元素宽度/24栅栏布局css**** */
+@for $i from 1 through 24 {
+	.width-#{$i} {
+		width: 100/24*$i * 1%;
+	}
+}
+
+/* ****布局盒子高度/元素高度/vh响应式布局css**** */
+@for $i from 1 through 24 {
+	.height-#{$i} {
+		height: 100/24*$i + vh;
+	}
+}
+
+/* ------------------------------间距调整类------------------------------ */
+/*外间距css*/
+@for $i from 1 through 20 {
+	.margin#{$i * 10} {
+		margin:$i * 10px
+	}
+}
+
+/*外水平间距css*/
+@for $i from 1 through 20 {
+	.marginlr#{$i * 10} {
+		margin-left: $i * 10px;
+		margin-right: $i * 10px;
+	}
+}
+
+/*外垂直间距css*/
+@for $i from 1 through 20 {
+	.margintb#{$i * 10} {
+		margin-top: $i * 10px;
+		margin-bottom: $i * 10px;
+	}
+}
+
+/* 列间距gutter 需配合flex布局使用 多用于横向滚动盒子内元素的间距拉开*/
+@for $i from 1 through 10 {
+	.gutter#{$i * 10} {
+		overflow: auto;
+		> *{
+			margin-right: $i * 10px;
+			&:last-child{
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+/*内间距css*/
+@for $i from 1 through 20 {
+	.padding#{$i * 10} {
+		padding: $i * 10px;
+	}
+}
+
+/*内水平间距css*/
+@for $i from 1 through 20 {
+	.paddinglr#{$i * 10} {
+		padding-left: $i * 10px;
+		padding-right: $i * 10px;
+	}
+}
+
+/*内垂直间距css*/
+@for $i from 1 through 20 {
+	.paddingtb#{$i * 10} {
+		padding-top: $i * 10px;
+		padding-bottom: $i * 10px;
+	}
+}
+
+/* --------------------单方向内间距-------------------- */
+/* ----------单方向左内间距---------- */
+@for $i from 1 through 20 {
+	.padding-left-#{$i * 10} {
+		padding-left: $i * 10px;
+	}
+}
+
+/* ----------单方向右内间距---------- */
+@for $i from 1 through 20 {
+	.padding-right-#{$i * 10} {
+		padding-right: $i * 10px;
+	}
+}
+
+/* ----------单方向上内间距---------- */
+@for $i from 1 through 20 {
+	.padding-top-#{$i * 10} {
+		padding-top: $i * 10px;
+	}
+}
+
+/* ----------单方向下内间距---------- */
+@for $i from 1 through 20 {
+	.padding-bottom-#{$i * 10} {
+		padding-bottom: $i * 10px;
+	}
+}
+
+/* --------------------单方向外间距-------------------- */
+/* ----------单方向左外间距---------- */
+@for $i from 1 through 20 {
+	.margin-left-#{$i * 10} {
+		margin-left: $i * 10px;
+	}
+}
+
+/* ----------单方向右外间距---------- */
+@for $i from 1 through 20 {
+	.margin-right-#{$i * 10} {
+		margin-right: $i * 10px;
+	}
+}
+
+/* ----------单方向上外间距---------- */
+@for $i from 1 through 20 {
+	.margin-top-#{$i * 10} {
+		margin-top: $i * 10px;
+	}
+}
+
+/* ----------单方向下外间距---------- */
+@for $i from 1 through 20 {
+	.margin-bottom-#{$i * 10} {
+		margin-bottom: $i * 10px;
+	}
+}
+
+/* ----------⭐盒子内部所有子元素间距调整⭐---------- */
+/* ⭐⭐⭐特别注意：使用了盒内所有元素调整间距的类名时，将不能对盒内的单个元素设置对应的内外间距 */
+/* 整体内间距 */
+@for $i from 1 through 10 {
+	.inner-padding-#{$i * 10} > * {
+		padding: $i * 10px;
+	}
+}
+/* 整体外间距 */
+@for $i from 1 through 10 {
+	.inner-margin-#{$i * 10} > * {
+		margin: $i * 10px;
+	}
+}
+/* 上下内间距 */
+@for $i from 1 through 10 {
+	.inner-paddingtb-#{$i * 10} > * {
+		padding-top: $i * 10px;
+		padding-bottom: $i * 10px;
+	}
+}
+/* 左右内间距 */
+@for $i from 1 through 10 {
+	.inner-paddinglr-#{$i * 10} > * {
+		padding-left: $i * 10px;
+		padding-right: $i * 10px;
+	}
+}
+/* 上下外间距 */
+@for $i from 1 through 10 {
+	.inner-margintb-#{$i * 10} > * {
+		margin-top: $i * 10px;
+		margin-bottom: $i * 10px;
+	}
+}
+/* 左右外间距 */
+@for $i from 1 through 10 {
+	.inner-marginlr-#{$i * 10} > * {
+		margin-left: $i * 10px;
+		margin-right: $i * 10px;
+	}
+}
+
+/* ----单方内间距---- */
+/* 单方内间距(上) */
+@for $i from 1 through 10 {
+	.inner-padding-top-#{$i * 10} > * {
+		padding-top: $i * 10px;
+	}
+}
+/* 单方内间距(下) */
+@for $i from 1 through 10 {
+	.inner-padding-bottom-#{$i * 10} > * {
+		padding-bottom: $i * 10px;
+	}
+}
+
+/* 单方内间距(左) */
+@for $i from 1 through 10 {
+	.inner-padding-left-#{$i * 10} > * {
+		padding-left: $i * 10px;
+	}
+}
+
+/* 单方内间距(右) */
+@for $i from 1 through 10 {
+	.inner-padding-right-#{$i * 10} > * {
+		padding-right: $i * 10px;
+	}
+}
+
+/* ----单方外间距---- */
+/* 单方外间距(上) */
+@for $i from 1 through 10 {
+	.inner-margin-top-#{$i * 10} > * {
+		margin-top: $i * 10px;
+	}
+}
+/* 单方外间距(下) */
+@for $i from 1 through 10 {
+	.inner-margin-bottom-#{$i * 10} > * {
+		margin-bottom: $i * 10px;
+	}
+}
+
+/* 单方外间距(左) */
+@for $i from 1 through 10 {
+	.inner-margin-left-#{$i * 10} > * {
+		margin-left: $i * 10px;
+	}
+}
+
+/* 单方外间距(右) */
+@for $i from 1 through 10 {
+	.inner-margin-right-#{$i * 10} > * {
+		margin-right: $i * 10px;
+	}
+}
+
+/* ------------------------------效果类------------------------------ */
+/* 盒子阴影 */
+/* 深阴影 */
+@for $i from 1 through 10 {
+	.boxshadow-dark-#{$i * 10} {
+		box-shadow: 0 0 $i * 5px mix(#ffffff, $border-color , 0%);
+	}
+}
+/* 中阴影 */
+@for $i from 1 through 10 {
+	.boxshadow-middle-#{$i * 10} {
+		box-shadow: 0 0 $i * 5px mix(#ffffff, $border-color , 25%);
+	}
+}
+
+/* 浅阴影 */
+@for $i from 1 through 10 {
+	.boxshadow-light-#{$i * 10} {
+		box-shadow: 0 0 $i * 5px mix(#ffffff, $border-color , 50%);
+	}
+}
+
+/* 更浅阴影 */
+@for $i from 1 through 10 {
+	.boxshadow-lighter-#{$i * 10} {
+		box-shadow: 0 0 $i * 5px mix(#ffffff, $border-color , 75%);
+	}
+}
+
+
+/* 圆角 */
+@for $i from 1 through 10 {
+	.border-radius-#{$i * 10} {
+		border-radius: $i * 5px;
+		overflow: hidden;
+	}
+}
+
+/* 透明度改变 */
+@for $i from 1 through 9 {
+	.opacity-#{$i * 10} {
+		opacity: $i / 10;
+	}
+}
+
+/* 暗黑模式 */
+.darkmode{
+	/* 清除暗黑，用于排除不需要添加暗黑效果的元素 */
+	.cleardark{
+		filter: invert(1) hue-rotate(180deg);
+	}
+	min-height: 100vh;
+	background-color: $page-color;
+	filter: invert(1) hue-rotate(180deg);
+	transition: color 300ms, background-color 300ms;
+}
+.darkmode img,.darkmode video{
+	filter: invert(1) hue-rotate(180deg);
+}
+
+/* --------元素变换 transform相关类-------- */
+/* ⭐注意:所有牵扯到transform的类,只能使用一个类名,如需要多个变换,需再套一层加第2个类名 */
+
+/* 设置变换的原点(不设置默认为中心点) */
+/*左*/
+.ol{
+	transform-origin: 0 50%;
+}
+/*右*/
+.or{
+	transform-origin: 100% 50%;
+}
+/*上*/
+.ot{
+	transform-origin: 50% 0;
+}
+/*下*/
+.ob{
+	transform-origin: 50% 100%;
+}
+/* 缩放 (缩小)*/
+/* 设置完缩放后 如需要,需自行修正字体大小 */
+.scale-sm-1{
+	transform: scale(.9);
+}
+.scale-sm-2{
+	transform: scale(.8);
+}
+.scale-sm-3{
+	transform: scale(.7);
+}
+.scale-sm-4{
+	transform: scale(.6);
+}
+.scale-sm-5{
+	transform: scale(.5);
+}
+/* 缩放 (放大)*/
+/* 设置完缩放后 如需要,需自行修正字体大小 */
+.scale-lg-1{
+	transform: scale(1.1);
+}
+.scale-lg-2{
+	transform: scale(1.2);
+}
+.scale-lg-3{
+	transform: scale(1.3);
+}
+.scale-lg-4{
+	transform: scale(1.4);
+}
+.scale-lg-5{
+	transform: scale(1.5);
+}
+
+/* 元素微移 */
+/* 若需水平垂直2个方向都有位移,类名需向外嵌套而不是追加 */
+@for $i from 1 through 20 {
+	// 向左移动
+	.move-to-left-#{$i * 10} {
+		transform: translateX(-$i * 10 + px);
+	}
+	// 向右移动
+	.move-to-right-#{$i * 10} {
+		transform: translateX($i * 10 + px);
+	}
+	// 向上移动
+	.move-to-top-#{$i * 10} {
+		transform: translateY(-$i * 10 + px);
+	}
+	// 向下移动
+	.move-to-bottom-#{$i * 10} {
+		transform: translateY($i * 10 + px);
+	}
+}
+
+/* 元素微移(类名开头为大写M，后方文档将一起移动) */
+@for $i from 1 through 20 {
+	// 向左移动
+	.Move-to-left-#{$i * 10} {
+		margin-left: -$i * 10 + px;
+	}
+	// 向右移动
+	.Move-to-right-#{$i * 10} {
+		margin-left: $i * 10 + px;
+	}
+	// 向上移动
+	.Move-to-top-#{$i * 10} {
+		margin-top: -$i * 10 + px;
+	}
+	// 向下移动
+	.Move-to-bottom-#{$i * 10} {
+		margin-top: $i * 10 + px;
+	}
+}
+
+/* 元素旋转 */
+@for $i from 1 through 35 {
+	.rotate-#{$i * 10} {
+		transform: rotateZ($i * 10 + deg);
+	}
+}
+
+/* 元素倾斜(用于生成平行四边形) */
+@for $i from 1 through 50 {
+	/* 横向倾斜 */
+	.skewX-#{$i * 10} {
+		transform: skewX(-$i * 10 + deg);
+	}
+	/* 横向倾斜(反向) */
+	.skewXR-#{$i * 10} {
+		transform: skewX($i * 10 + deg);
+	}
+	/* 纵向倾斜 */
+	.skewY-#{$i * 10} {
+		transform: skewY(-$i * 10 + deg);
+	}
+	/* 纵向倾斜(反向) */
+	.skewYR-#{$i * 10} {
+		transform: skewY($i * 10 + deg);
+	}
+}
+
+/* 层级处理 */
+/* 1.层级向上 */
+@for $i from 1 through 5 {
+	.zindex-up-#{$i} {
+		z-index:$i * 10!important;
+		@extend .positionbox;
+	}
+}
+/* 1.层级向下 */
+@for $i from 1 through 5 {
+	.zindex-down-#{$i} {
+		z-index:-$i * 10!important;
+		@extend .positionbox;
+	}
+}
+
+/* 动画效果修正(以下3个类的步进数都是0.1s) */
+/* 过渡 */
+@for $i from 1 through 20 {
+	.transition-#{$i} {
+		transition: $i / 10 + s;
+	}
+}
+
+/* 动画延迟 */
+@for $i from 1 through 20 {
+	.delay-#{$i} {
+		animation-delay: $i / 10 + s;
+	}
+}
+
+/* 动画时长 */
+@for $i from 1 through 20 {
+	body .time-#{$i} {
+		animation-duration: $i / 10 + s;
+	}
+}
+
+/* 出场动画专用类，用于出场动画结束后，清除动画元素的文档占位(以便后方元素补位) */
+// 使用时需加在transiton组件的leave-active-class的属性里面，因为它是离场时要修复的
+.animate-end{
+	position: absolute;
+}
+
+/* 溢出处理 */
+/* 1.溢出隐藏 */
+.of-hidden{
+	overflow: hidden;
+}
+.of-hidden:hover{
+	overflow: hidden;
+}
+/* 2.溢出滚动 */
+.of-scroll{
+	overflow: hidden;
+}
+.of-scroll:hover{
+	overflow:auto
+}
+
+/* --------------------其他类-------------------- */
+/* 生成一个正方形*/
+@for $i from 1 through 50 {
+	.square-box-#{$i * 10}{
+		width: $i * 10 + px;
+		height: $i * 10 + px;
+	}
+}
+/* 生成一个圆形*/
+@for $i from 1 through 50 {
+	.circle-box-#{$i * 10}{
+		width: $i * 10 + px;
+		height: $i * 10 + px;
+		border-radius: 50%;
+		overflow: hidden;
+	}
+}
+/* 生成一个分割线 （需配合元素高度类使用，默认高度50rpx。可配合fill改变分割线的颜色）*/
+@for $i from 1 through 20 {
+	.separateline-dark-#{$i} {
+		width: $i + px;
+		height: 50px;
+		background-color: mix(#ffffff, $border-color , 0%);
+		@extend .border-radius-20;
+	}
+	.separateline-middle-#{$i} {
+		width: $i + px;
+		height: 50px;
+		background-color: mix(#ffffff, $border-color , 25%);
+		@extend .border-radius-20;
+	}
+	.separateline-light-#{$i} {
+		width: $i + px;
+		height: 50px;
+		background-color: mix(#ffffff, $border-color , 50%);
+		@extend .border-radius-20;
+	}
+	.separateline-lighter-#{$i} {
+		width: $i + px;
+		height: 50px;
+		background-color: mix(#ffffff, $border-color , 75%);
+		@extend .border-radius-20;
+	}
+}
+/* 给容器盒子左上角生成一个角标 */
+/* 使用时,外盒需加上.positionbox类 */
+%dot {
+	position: absolute;
+	right: 0;
+	top: 0;
+	transform: translate(50%,-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: $main-color;
+	padding: 0 10px;
+	color: $extreme-text-color;
+	z-index: 9;
+}
+@for $i from 1 through 10 {
+	// 不适用于再添加文字 只是一个小点
+	@if $i * 10 == 10 {
+		.dot-#{$i * 10}{
+			@extend %dot;
+			width: 10px;
+			height: 10px;
+			padding: 0;
+			border-radius: 50%;
+		}
+	}
+	@else if $i * 10 == 20 {
+		.dot-#{$i * 10}{
+			@extend %dot;
+			min-width: $i * 10 + px;
+			height: $i * 10 + px;
+			padding: 5px 10px;
+			box-sizing: content-box;
+			border-radius: $i * 10 + px;
+			font-size: 20px;
+		}
+	}
+	@else{
+		.dot-#{$i * 10}{
+			@extend %dot;
+			min-width: $i * 10 + px;
+			height: $i * 10 + px;
+			border-radius: $i * 10 + px;
+			line-height: $i * 10 + px;
+		}
+	}
+}
+
+// 更新日志:
+// 2021-05-02更新:增加了容器盒子左上角徽标的快速生成类 .dot
+// 2021-05-03更新:修正zindex层级类错误
+// 2021-05-09更新:优化scroll-view横向滚动类的实现
+// 2021-05-11更新:修正文本溢出隐藏不生效的问题
+// 2021-05-15更新:修正gutter类的实现
+// 2021-05-16更新:增加页面组件根元素的初始化高度类page-init  修正外间距最大范围为200
+// 2021-05-30更新:新增过渡时间类 .transition
+// 2021-06-01更新:新增元素微移的大M类，后方文档可以跟随移动。新增溢出处理类
+// 2021-06-03更新:新增出场动画专用类，用于出场动画结束后，清除它的文档占位
+// 2021-06-06更新:优化层级处理类，能实现多图层的效果。新增动画延迟时间类 .delay。新增元素单边边框，新增生成实体分割线的类(非生成边框css) .separateline。新增元素高度类 .height，新增元素宽度类 .width。一些小的修复
+// 2021-06-21更新:新增最小宽度类 .min-width。新增生成纵向flex盒 .flex-column。新增布局容器高度修复类 .stretch。新增文字间距调整类 .text-space
+// 2021-06-29更新:调整文字间距类的步进值为5，最大间距为40
+// 2021-07-10更新:修正page-init类，新增主题配色，增加主题样式的边框类，增加行高调整.line-height类，修正text-space类的单位步进大小，增加动画时长调整time类，增加文字对齐方式的一个段落两端对齐的类.tj，类库结构调整和其它小的修复
+// 2021-07-21更新:修复最小宽度属性错误，新增色块配色时可以直接使用的4个配色背景类，修改文档中小的细节
+// 2021-08-04更新:修正border-around类中的错误
+// 2021-08-07更新:新增元素变换的2个类，旋转和斜率，文档结构小调整，增加暗黑滤镜darkmode
+// 2021-08-21更新:原来的flex-fit类被弃用，修改为flex-menu，作用于flex容器，主要用途为快速生成一个文字菜单条
+// 2021-08-22更新:修正pc版flex1类只在hover状态下显示滚动条，调整所有的溢出滚动都只在hover状态下显示滚动条，修改浏览器默认滚动条样式
+// 2021-09-04更新:修复of-hidden在hover状态下不能隐藏滚动条的bug,主题样式类大修正。优化flex-menu类
+// 2021-10-09更新:新增调整盒内全部子元素间距的inner-padding和inner-margin类
+// 2021-10-14更新:新增调整盒内全部子元素的上下内外间距和左右内外间距,新增选中和禁选的主题类，补充警告主题类
+// 2021-10-21更新:补充用警告色做文字颜色的类
+// 2021-10-25更新:选中和禁选色变为mix混合函数根据主题色自动生成，主题变量全部换为scss变量
+// 2021-11-17更新:新增全局hover类，新增高度为100%的高度类.h100，调整zindex层级的数值并增加优先级，滚动条样式修正，增加最小高度类，调整元素宽度和高度的步进值为10px，隐性增加了宽度为0，高度为0的类width0，height0
+// 2021-11-18更新:新增改变元素变换原点的类
+// 2021-11-21更新:修正极致色为文字、边框、填充三种类型，背景颜色变量更名为$page-color(因bg和fill几乎同义,容易混淆)。新增以页面背景色作为色块填充色的fill类，调整hover为普通效果和轻微效果

@@ -1,0 +1,209 @@
+{
+	"code": 200,
+	"message": "数据获取成功",
+	"data": [{
+			"roleid": "4587",
+			"code": "CKGLY",
+			"title": "仓库管理员",
+			"state": true,
+			"root": [{
+					"title": "订单管理",
+					"children": [{
+						"title": "订单列表",
+						"children": [{
+								"title": "创建"
+							},
+							{
+								"title": "删除"
+							},
+							{
+								"title": "审核"
+							},
+							{
+								"title": "上传"
+							},
+							{
+								"title": "下载"
+							}
+						]
+					}]
+				},
+				{
+					"title": "报表管理",
+					"children": [{
+							"title": "创建"
+						},
+						{
+							"title": "删除"
+						},
+						{
+							"title": "审核"
+						}
+					]
+				},
+				{
+					"title": "运营管理",
+					"children": [{
+							"title": "基础运营",
+							"children": [{
+									"title": "创建"
+								},
+								{
+									"title": "删除"
+								},
+								{
+									"title": "审核"
+								},
+								{
+									"title": "上传"
+								},
+								{
+									"title": "下载"
+								}
+							]
+						},
+						{
+							"title": "商务运营",
+							"children": [{
+									"title": "审核"
+								},
+								{
+									"title": "上传"
+								},
+								{
+									"title": "下载"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"code": "XSY",
+			"title": "销售员",
+			"roleid": "4583",
+			"state": true,
+			"root": [{
+					"title": "销售业绩管理",
+					"children": [{
+						"title": "业绩表",
+						"children": [{
+								"title": "删除"
+							},
+							{
+								"title": "审核"
+							},
+							{
+								"title": "上传"
+							},
+							{
+								"title": "下载"
+							}
+						]
+					}]
+				},
+				{
+					"title": "报表管理",
+					"children": [{
+							"title": "创建"
+						},
+						{
+							"title": "删除"
+						},
+						{
+							"title": "审核"
+						}
+					]
+				},
+				{
+					"title": "黑名单管理",
+					"children": [{
+							"title": "历史黑名单",
+							"children": [{
+									"title": "创建"
+								},
+								{
+									"title": "删除"
+								},
+								{
+									"title": "审核"
+								},
+								{
+									"title": "上传"
+								},
+								{
+									"title": "下载"
+								}
+							]
+						},
+						{
+							"title": "黑名单转白",
+							"children": [{
+									"title": "审核"
+								},
+								{
+									"title": "上传"
+								},
+								{
+									"title": "下载"
+								},
+								{
+									"title": "删除"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"code": "SMY",
+			"title": "扫码员",
+			"roleid": "4588",
+			"state": true
+		},
+		{
+			"code": "DDSHY",
+			"title": "订单审核员",
+			"roleid": "4589",
+			"state": true
+		},
+		{
+			"code": "KJ",
+			"title": "会计",
+			"roleid": "4590",
+			"state": true
+		},
+		{
+			"code": "CN",
+			"title": "出纳",
+			"roleid": "4591",
+			"state": true
+		},
+		{
+			"code": "YWY",
+			"title": "业务员",
+			"roleid": "4592",
+			"state": true
+		},
+		{
+			"code": "FXPGY",
+			"title": "风险评估员",
+			"roleid": "4593",
+			"state": true
+		},
+		{
+			"code": "JS",
+			"title": "讲师",
+			"roleid": "4567",
+			"state": true
+		},
+		{
+			"code": "JXKHY",
+			"title": "绩效考核员",
+			"roleid": "4547",
+			"state": true
+		}
+	]
+}
