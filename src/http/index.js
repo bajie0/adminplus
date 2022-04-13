@@ -13,7 +13,7 @@ import router from '../router/index.js'
 
 //1.创建axios实例，封装axios全局配置
 const instance = axios.create({
-	baseURL: 'http://172.18.44.48:8090/',
+	baseURL: 'http://10.255.52.165:8000/',
 	// baseURL: 'http://localhost:8083/interface',
 	timeout: 5000
 })

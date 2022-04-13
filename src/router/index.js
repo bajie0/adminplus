@@ -79,6 +79,13 @@ const routes = [
 				}
 			},
 			{
+				path: 'data-dictionary',
+				component: () => import('../views/manage_dictionary'),
+				meta: {
+					title: '字典列表',
+				}
+			},
+			{
 				path: 'operate_root',
 				component: () => import('../views/operate_root'),
 				meta: {
@@ -107,8 +114,8 @@ router.beforeEach((to, from) => {
 // 手动点击浏览器前进后退键，使左侧菜单和顶部tab也能切换到对应的选中项
 router.afterEach((to, from) => {
 	for (let item of store.state.$tablist) {
-		console.log(to.path)
-		console.log(item.name)
+		// console.log(to.path)
+		// console.log(item.name)
 		if(to.path == '/index' + item.name){
 			return store.vuex('$menu_current',item.name)
 		}

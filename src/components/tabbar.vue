@@ -8,7 +8,7 @@
 		<!-- tabbar操作菜单 -->
 		<el-dropdown class="fill-color-white positionbox" @command="itemclick" placement="bottom">
 			<span class="el-dropdown-link inner-center height40">
-				<i class="el-icon-arrow-down el-icon--right width110 tc"></i>
+				<i class="el-icon-arrow-down el-icon--right width110 tr padding-right-30"></i>
 			</span>
 			<template #dropdown>
 				<el-dropdown-menu>

@@ -61,6 +61,8 @@ const store = createStore({
 		$showrole:false,
 		// 创建用户的弹窗
 		$showroot:false,
+		// 创建字典的弹窗
+		$showdictionary:false,
 		// 是否开启暗黑模式
 		$isdark: lifeData.$isdark ? lifeData.$isdark : false,
 		// 是否展开sidebar

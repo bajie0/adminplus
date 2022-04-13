@@ -1,10 +1,19 @@
-/* common.css for pc   Author:xiaojie    version:2.3.2 */
+/* common.css for pc   Author:xiaojie    version:3.2.0 */
 // 注意:之前的css版本将全面迁移至scss版本,css版本将不再进行维护。
 // pc版本与uniapp和原生vue版同步更新
 // pc上建议不要使用自适应布局,这样能让更大的设备能显示更多的内容,而不是放大显示，所以px是首选的布局单位
 
-/* ----------⭐⭐⭐全局scss主题变量⭐⭐⭐---------- */
 @import './theme.scss';
+
+/* ----------⭐⭐自由系数⭐⭐---------- */
+/* 默认为1即可，一般不建议修改。用于后期调整版面，整体(全局元素)需要改动时可以考虑修改自由系数 */
+/* 1.间距系数 */
+	$spacingNum: 1;
+/* 2.宽高(尺寸)系数 */
+	$sizeNum: 1;
+/* 3.字号系数 */
+	$fontNum: 1;
+/* 此库只提供以上3个基础系统。根据项目需要，也可以添加更多的系数，然后修改对应位置的代码 */
 
 /* ----------初始化页面---------- */
 /* ----初始化滚动条---- */
@@ -16,35 +25,14 @@
 /* 滚动条滑块 */
 ::-webkit-scrollbar-thumb {
 	border-radius:10px;
-	background:mix(#ffffff, $border-color , 75%);
+	background:mix(rgba(255,255,255,0.75), $border-color , 75%);
 	box-shadow:0 0 5px mix(#ffffff, $border-color , 50%) inset;
 }
 ::-webkit-scrollbar-thumb:hover {
 	border-radius:10px;
-	background:mix(#ffffff, $border-color , 50%);
+	background:mix(rgba(255,255,255,0.85), $border-color , 50%);
 	box-shadow:0 0 10px mix(#ffffff, $border-color , 50%) inset;
 }
-
-/* 全局hover */
-/* 普通效果 */
-.hover{
-	transition: .4s;
-}
-.hover:hover{
-	cursor: pointer;
-	transform: translateY(-4px);
-	@extend .boxshadow-light-30;
-}
-/* 轻微效果(适用于较小的元素) */
-.hover-sm{
-	transition: .4s;
-}
-.hover-sm:hover{
-	cursor: pointer;
-	transform: translateY(-2px);
-	@extend .boxshadow-light-10;
-}
-
 /* 初始化图片对齐方式 */
 img {
 	vertical-align: middle;
@@ -58,40 +46,469 @@ img {
 	// 固定盒子
 	box-sizing: border-box;
 	// 禁用文本选择
-	// user-select: none;
+	user-select: none;
+	// 允许长单词或URL地址折行
+	word-wrap: break-word;
+}
+
+/* 全局hover */
+/* 单一效果(只展示手型) */
+.hover-ol:hover{
+	cursor: pointer;
+	position: relative;
+}
+/* 轻微效果(适用于较小的元素) */
+.hover-sm{
+	transition: .4s;
+}
+.hover-sm:hover{
+	cursor: pointer;
+	position: relative;
+	transform: translateY(-2px);
+	@extend .boxshadow-light-10;
+}
+/* 较重效果 */
+.hover-lg{
+	transition: .4s;
+}
+.hover-lg:hover{
+	cursor: pointer;
+	position: relative;
+	transform: translateY(-4px);
+	@extend .boxshadow-light-30;
+}
+
+/* ⭐⭐hover显现元素⭐⭐ */
+/*----------------------------------------------------------------------------
+/* hover呼出展示内容 (2个类才生效，使用的时候被hover的元素需加上全局hover类名)*/
+/* 1.hover呼出分4个方向 分别代表从hover元素的左侧 右侧 下部的左侧 下部的右侧呼出 */
+/* 2.呼出分从元素外部呼出和元素内部呼出 out in*/
+/* 3.从元素外部呼出分4个位置 tr tl br bl*/
+/* 4.从元素内部呼出分9个位置 tr top tl right center left br bottom bl*/
+/* 5.内部可滚动的盒子不支持hover呼出元素，使用前先确定盒子内部的滚动性
+/* 6.本库只能实现简单的hover显现元素，不支持嵌套hover，实现复杂的交互和效果需使用js
+/*----------------------------------------------------------------------------
+
+/* slide出现 (out) */
+/* 注意:sl-out- 必须配合height设置盒子高度才能有slide效果 */
+.sl-out-bl,.sl-out-br,.sl-out-tl,.sl-out-tr{
+	display: none;
+}
+.hover-ol:hover .sl-out-bl,.hover-sm:hover .sl-out-bl,.hover-lg:hover .sl-out-bl{
+	top: 100%;
+	left: 0;
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-out-br,.hover-sm:hover .sl-out-br,.hover-lg:hover .sl-out-br{
+	top: 100%;
+	right: 0;
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-out-tl,.hover-sm:hover .sl-out-tl,.hover-lg:hover .sl-out-tl{
+	top: 0;
+	right: 100%;
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-out-tr,.hover-sm:hover .sl-out-tr,.hover-lg:hover .sl-out-tr{
+	top: 0;
+	left: 100%;
+	@extend %hoverSlide;
+}
+/* slide出现 (in) */
+/* 注意:sl-in- 必须配合height设置盒子高度才能有slide效果 */
+.sl-in-tr,.sl-in-top,.sl-in-tl,.sl-in-right,.sl-in-center,.sl-in-left,.sl-in-br,.sl-in-bottom,.sl-in-bl{
+	display: none;
+}
+.hover-ol:hover .sl-in-tr,.hover-sm:hover .sl-in-tr,.hover-lg:hover .sl-in-tr{
+	top: 0;
+	right: 0;
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-in-top,.hover-sm:hover .sl-in-top,.hover-lg:hover .sl-in-top{
+	top: 0;
+	left: 50%;
+	transform:translateX(-50%);
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-in-tl,.hover-sm:hover .sl-in-tl,.hover-lg:hover .sl-in-tl{
+	top: 0;
+	left: 0;
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-in-right,.hover-sm:hover .sl-in-right,.hover-lg:hover .sl-in-right{
+	top: 50%;
+	right: 0;
+	transform:translateY(-50%);
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-in-center,.hover-sm:hover .sl-in-center,.hover-lg:hover .sl-in-center{
+	top: 50%;
+	left: 50%;
+	transform:translate(-50%,-50%);
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-in-left,.hover-sm:hover .sl-in-left,.hover-lg:hover .sl-in-left{
+	top: 50%;
+	left: 0;
+	transform:translateY(-50%);
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-in-br,.hover-sm:hover .sl-in-br,.hover-lg:hover .sl-in-br{
+	bottom: 0;
+	right: 0;
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-in-bottom,.hover-sm:hover .sl-in-bottom,.hover-lg:hover .sl-in-bottom{
+	bottom: 0;
+	left: 50%;
+	transform:translateX(-50%);
+	@extend %hoverSlide;
+}
+.hover-ol:hover .sl-in-bl,.hover-sm:hover .sl-in-bl,.hover-lg:hover .sl-in-bl{
+	bottom: 0;
+	left: 0;
+	@extend %hoverSlide;
+}
+@keyframes hoverSlide {
+	0%{
+		height: 0;
+		overflow: hidden;
+	}
+	99%{
+		overflow: hidden;
+	}
+	100%{
+		overflow: overlay;
+	}
+}
+%hoverSlide{
+	display: block;
+	position: absolute;
+	animation: hoverSlide .4s;
+	overflow: overlay;
+	cursor: default;
+}
+
+/* fade出现 (out) */
+.fd-out-bl,.fd-out-br,.fd-out-tl,.fd-out-tr{
+	display: none;
+}
+.hover-ol:hover .fd-out-bl,.hover-sm:hover .fd-out-bl,.hover-lg:hover .fd-out-bl{
+	top: 100%;
+	left: 0;
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-out-br,.hover-sm:hover .fd-out-br,.hover-lg:hover .fd-out-br{
+	top: 100%;
+	right: 0;
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-out-tl,.hover-sm:hover .fd-out-tl,.hover-lg:hover .fd-out-tl{
+	top: 0;
+	right: 100%;
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-out-tr,.hover-sm:hover .fd-out-tr,.hover-lg:hover .fd-out-tr{
+	top: 0;
+	left: 100%;
+	@extend %hoverFade;
+}
+/* fade出现 (in) */
+.fd-in-tr,.fd-in-top,.fd-in-tl,.fd-in-right,.fd-in-center,.fd-in-left,.fd-in-br,.fd-in-bottom,.fd-in-bl{
+	display: none;
+}
+.hover-ol:hover .fd-in-tr,.hover-sm:hover .fd-in-tr,.hover-lg:hover .fd-in-tr{
+	top: 0;
+	right: 0;
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-in-top,.hover-sm:hover .fd-in-top,.hover-lg:hover .fd-in-top{
+	top: 0;
+	left: 50%;
+	transform:translateX(-50%);
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-in-tl,.hover-sm:hover .fd-in-tl,.hover-lg:hover .fd-in-tl{
+	top: 0;
+	left: 0;
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-in-right,.hover-sm:hover .fd-in-right,.hover-lg:hover .fd-in-right{
+	top: 50%;
+	right: 0;
+	transform:translateY(-50%);
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-in-center,.hover-sm:hover .fd-in-center,.hover-lg:hover .fd-in-center{
+	top: 50%;
+	left: 50%;
+	transform:translate(-50%,-50%);
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-in-left,.hover-sm:hover .fd-in-left,.hover-lg:hover .fd-in-left{
+	top: 50%;
+	left: 0;
+	transform:translateY(-50%);
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-in-br,.hover-sm:hover .fd-in-br,.hover-lg:hover .fd-in-br{
+	bottom: 0;
+	right: 0;
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-in-bottom,.hover-sm:hover .fd-in-bottom,.hover-lg:hover .fd-in-bottom{
+	bottom: 0;
+	left: 50%;
+	transform:translateX(-50%);
+	@extend %hoverFade;
+}
+.hover-ol:hover .fd-in-bl,.hover-sm:hover .fd-in-bl,.hover-lg:hover .fd-in-bl{
+	bottom: 0;
+	left: 0;
+	@extend %hoverFade;
+}
+@keyframes hoverFade {
+	from{
+		opacity: 0;
+	}
+}
+%hoverFade{
+	display: block;
+	position: absolute;
+	animation: hoverFade 1s;
+	overflow: overlay;
+	cursor: default;
+}
+
+/* slide和fade叠加出现 (out) */
+/* 注意:slfd-out- 必须配合height设置盒子高度才能有slide效果，否则只有fade效果 */
+.slfd-out-bl,.slfd-out-br,.slfd-out-tl,.slfd-out-tr{
+	display: none;
+}
+.hover-ol:hover .slfd-out-bl,.hover-sm:hover .slfd-out-bl,.hover-lg:hover .slfd-out-bl{
+	top: 100%;
+	left: 0;
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-out-br,.hover-sm:hover .slfd-out-br,.hover-lg:hover .slfd-out-br{
+	top: 100%;
+	right: 0;
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-out-tl,.hover-sm:hover .slfd-out-tl,.hover-lg:hover .slfd-out-tl{
+	top: 0;
+	right: 100%;
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-out-tr,.hover-sm:hover .slfd-out-tr,.hover-lg:hover .slfd-out-tr{
+	top: 0;
+	left: 100%;
+	@extend %hoverSlfd;
+}
+/* slide和fade叠加出现 (in) */
+/* 注意:slfd-in- 必须配合height设置盒子高度才能有slide效果，否则只有fade效果 */
+.slfd-in-tr,.slfd-in-top,.slfd-in-tl,.slfd-in-right,.slfd-in-center,.slfd-in-left,.slfd-in-br,.slfd-in-bottom,.slfd-in-bl{
+	display: none;
+}
+.hover-ol:hover .slfd-in-tr,.hover-sm:hover .slfd-in-tr,.hover-lg:hover .slfd-in-tr{
+	top: 0;
+	right: 0;
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-in-top,.hover-sm:hover .slfd-in-top,.hover-lg:hover .slfd-in-top{
+	top: 0;
+	left: 50%;
+	transform:translateX(-50%);
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-in-tl,.hover-sm:hover .slfd-in-tl,.hover-lg:hover .slfd-in-tl{
+	top: 0;
+	left: 0;
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-in-right,.hover-sm:hover .slfd-in-right,.hover-lg:hover .slfd-in-right{
+	top: 50%;
+	right: 0;
+	transform:translateY(-50%);
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-in-center,.hover-sm:hover .slfd-in-center,.hover-lg:hover .slfd-in-center{
+	top: 50%;
+	left: 50%;
+	transform:translate(-50%,-50%);
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-in-left,.hover-sm:hover .slfd-in-left,.hover-lg:hover .slfd-in-left{
+	top: 50%;
+	left: 0;
+	transform:translateY(-50%);
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-in-br,.hover-sm:hover .slfd-in-br,.hover-lg:hover .slfd-in-br{
+	bottom: 0;
+	right: 0;
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-in-bottom,.hover-sm:hover .slfd-in-bottom,.hover-lg:hover .slfd-in-bottom{
+	bottom: 0;
+	left: 50%;
+	transform:translateX(-50%);
+	@extend %hoverSlfd;
+}
+.hover-ol:hover .slfd-in-bl,.hover-sm:hover .slfd-in-bl,.hover-lg:hover .slfd-in-bl{
+	bottom: 0;
+	left: 0;
+	@extend %hoverSlfd;
+}
+@keyframes hoverSlfd {
+	from{
+		height:0;
+		opacity: 0;
+	}
+}
+%hoverSlfd{
+	display: block;
+	position: absolute;
+	animation-name: hoverSlide,hoverFade;
+	animation-duration: .4s,1s;
+	overflow: overlay;
+	cursor: default;
+}
+
+/* 升起出现 (out) */
+.up-out-bl,.up-out-br,.up-out-tl,.up-out-tr{
+	display: none;
+}
+.hover-ol:hover .up-out-bl,.hover-sm:hover .up-out-bl,.hover-lg:hover .up-out-bl{
+	top: 100%;
+	left: 0;
+	@extend %hoverUp;
+}
+.hover-ol:hover .up-out-br,.hover-sm:hover .up-out-br,.hover-lg:hover .up-out-br{
+	top: 100%;
+	right: 0;
+	@extend %hoverUp;
+}
+.hover-ol:hover .up-out-tl,.hover-sm:hover .up-out-tl,.hover-lg:hover .up-out-tl{
+	top: 0;
+	right: 100%;
+	@extend %hoverUp;
+}
+.hover-ol:hover .up-out-tr,.hover-sm:hover .up-out-tr,.hover-lg:hover .up-out-tr{
+	top: 0;
+	left: 100%;
+	@extend %hoverUp;
+}
+/* 升起出现 (in) */
+.up-in-tr,.up-in-top,.up-in-tl,.up-in-right,.up-in-center,.up-in-left,.up-in-br,.up-in-bottom,.up-in-bl{
+	display: none;
+}
+.hover-ol:hover .up-in-tr,.hover-sm:hover .up-in-tr,.hover-lg:hover .up-in-tr{
+	top: 0;
+	right: 0;
+	@extend %hoverUp;
+}
+.hover-ol:hover .up-in-top,.hover-sm:hover .up-in-top,.hover-lg:hover .up-in-top{
+	top: 0;
+	left: 50%;
+	transform:translateX(-50%);
+	@extend %hoverUpFix;
+}
+.hover-ol:hover .up-in-tl,.hover-sm:hover .up-in-tl,.hover-lg:hover .up-in-tl{
+	top: 0;
+	left: 0;
+	@extend %hoverUp;
+}
+.hover-ol:hover .up-in-right,.hover-sm:hover .up-in-right,.hover-lg:hover .up-in-right{
+	top: 50%;
+	right: 0;
+	transform:translateY(-50%);
+	@extend %hoverUp;
+}
+.hover-ol:hover .up-in-center,.hover-sm:hover .up-in-center,.hover-lg:hover .up-in-center{
+	top: 50%;
+	left: 50%;
+	transform:translate(-50%,-50%);
+	@extend %hoverUpFix;
+}
+.hover-ol:hover .up-in-left,.hover-sm:hover .up-in-left,.hover-lg:hover .up-in-left{
+	top: 50%;
+	left: 0;
+	transform:translateY(-50%);
+	@extend %hoverUp;
+}
+.hover-ol:hover .up-in-br,.hover-sm:hover .up-in-br,.hover-lg:hover .up-in-br{
+	bottom: 0;
+	right: 0;
+	@extend %hoverUp;
+}
+.hover-ol:hover .up-in-bottom,.hover-sm:hover .up-in-bottom,.hover-lg:hover .up-in-bottom{
+	bottom: 0;
+	left: 50%;
+	transform:translateX(-50%);
+	@extend %hoverUpFix;
+}
+.hover-ol:hover .up-in-bl,.hover-sm:hover .up-in-bl,.hover-lg:hover .up-in-bl{
+	bottom: 0;
+	left: 0;
+	@extend %hoverUp;
+}
+@keyframes hoverUp {
+	from{
+		transform: translateY(20px);
+	}
+}
+@keyframes hoverUpFix {
+	from{
+		transform: translate(-50%,20px);
+	}
+}
+%hoverUp{
+	display: block;
+	position: absolute;
+	animation-name: hoverUp,hoverFade;
+	animation-duration: .7s,1.5s;
+	overflow: overlay;
+	cursor: default;
+}
+%hoverUpFix{
+	@extend %hoverUp;
+	animation-name: hoverUpFix,hoverFade;
 }
 
 /* 元素高度 */
 /* ⭐注意:使用的时候直接跟值(10的倍数，可取0)，后面没有短横线。有短横线的是响应式布局容器 */
 @for $i from 0 through 108 {
 	:root .height#{$i * 10} {
-		height: $i * 10 + px;
+		height: $i * $sizeNum * 10 + px;
 	}
 }
 /* 元素宽度 */
 /* ⭐注意:使用的时候直接跟值(10的倍数，可取0)，后面没有短横线。有短横线的是响应式布局容器 */
 @for $i from 0 through 192 {
 	:root .width#{$i * 10} {
-		width: $i * 10 + px;
+		width: $i * $sizeNum * 10 + px;
 	}
 }
 /* 元素最小宽度 */
 /* ⭐注意:使用的时候直接跟值(10的倍数) */
 @for $i from 1 through 140 {
 	:root .min-width#{$i * 10} {
-		min-width: $i * 10 + px;
+		min-width: $i * $sizeNum * 10 + px;
 	}
 }
 /* 元素最小高度 */
 /* ⭐注意:使用的时候直接跟值(10的倍数) */
 @for $i from 1 through 70 {
 	:root .min-height#{$i * 10} {
-		min-height: $i * 10 + px;
+		min-height: $i * $sizeNum * 10 + px;
 	}
 }
-/* 填满父元素的高度 */
-.h100{
-	height: 100%;
+/* 高度百分比 (h100即为填满父元素的高度) */
+@for $i from 1 through 10 {
+	.h#{$i * 10} {
+		height: $i * 10%;
+	}
 }
 
 /* ------------------------------文字处理类------------------------------ */
@@ -152,11 +569,10 @@ img {
 .text-weight {
 	font-weight: 600;
 }
-
 /* 文字大小 */
 @for $i from 10 through 100 {
 	.font-#{$i} {
-		font-size: $i + px;
+		font-size: $i * $fontNum + px;
 	}
 }
 /* 文字间距 */
@@ -171,6 +587,86 @@ img {
 	.line-height-#{$i} {
 		/* line-height-0可以清除行高,有时候可以达到对齐异常快速修正的效果 */
 		line-height: 1 + $i / 10;
+	}
+}
+/* 文字阴影 */
+@for $i from 1 through 10 {
+	/* 深色阴影 */
+	.text-shadow-dark-#{$i} {
+		text-shadow: $i+px $i+px $i+px mix(#ffffff, $text-color , 0%);
+	}
+	/* 中色阴影 */
+	.text-shadow-middle-#{$i} {
+		text-shadow: $i+px $i+px $i+px mix(#ffffff, $text-color , 25%);
+	}
+	/* 浅色阴影 */
+	.text-shadow-light-#{$i} {
+		text-shadow: $i+px $i+px $i+px mix(#ffffff, $text-color , 50%);
+	}
+	/* 更浅色阴影 */
+	.text-shadow-lighter-#{$i} {
+		text-shadow: $i+px $i+px $i+px mix(#ffffff, $text-color , 75%);
+	}
+}
+/* 文字描边 */
+@for $i from 1 through 50 {
+	/* ----用主色来描边文字---- */
+	.text-border-main-#{$i} {
+		-webkit-text-stroke-color: $main-color;
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	/* ----用辅助色来描边文字---- */
+	.text-border-assist-#{$i} {
+		-webkit-text-stroke-color: $assist-color;
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	/* ----用警告色来描边文字---- */
+	.text-border-warning-#{$i} {
+		-webkit-text-stroke-color: $warning-color;
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	/* ----用配色来描边文字---- */
+	.text-border-matchA-#{$i} {
+		-webkit-text-stroke-color: $match-color-A;
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	.text-border-matchB-#{$i} {
+		-webkit-text-stroke-color: $match-color-B;
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	.text-border-matchC-#{$i} {
+		-webkit-text-stroke-color: $match-color-C;
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	.text-border-matchD-#{$i} {
+		-webkit-text-stroke-color: $match-color-D;
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	/* ----用白色来描边文字---- */
+	.text-border-white-#{$i} {
+		-webkit-text-stroke-color: $extreme-border-color;
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	/* ----用黑色来描边文字(分四个等级)---- */
+	/* 深色描边 */
+	.text-border-black-dark-#{$i} {
+		-webkit-text-stroke-color: mix(#ffffff, $text-color , 0%);
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	/* 中色描边 */
+	.text-border-black-middle-#{$i} {
+		-webkit-text-stroke-color: mix(#ffffff, $text-color , 25%);
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	/* 浅色描边 */
+	.text-border-black-light-#{$i} {
+		-webkit-text-stroke-color: mix(#ffffff, $text-color , 50%);
+		-webkit-text-stroke-width: $i / 10 + px;
+	}
+	/* 更浅色描边 */
+	.text-border-black-lighter-#{$i} {
+		-webkit-text-stroke-color: mix(#ffffff, $text-color , 75%);
+		-webkit-text-stroke-width: $i / 10 + px;
 	}
 }
 
@@ -560,7 +1056,10 @@ body {
 /* ------------------------------滚动容器------------------------------ */
 .scroll-x {
 	display: flex;
-	overflow: auto;
+	overflow: hidden;
+}
+.scroll-x:hover {
+	overflow: overlay;
 }
 .scroll-x > *{
 	flex:none
@@ -802,7 +1301,7 @@ body {
 	overflow: hidden;
 }
 .flex1:hover{
-	overflow: auto;
+	overflow: overlay;
 }
 
 /* ⭐固定flex项 使flex项失去弹性 用于取消弹性伸缩（可能会横向溢出外盒）*/
@@ -829,6 +1328,12 @@ body {
 .stretch{
 	align-items: stretch;
 }
+.stretch > *{
+	@extend .of-hidden;
+}
+.stretch > *:hover{
+	@extend .of-scroll;
+}
 
 /* ****布局盒子宽度/元素宽度/24栅栏布局css**** */
 @for $i from 1 through 24 {
@@ -844,36 +1349,49 @@ body {
 	}
 }
 
+/* ⭐⭐****布局盒子占位/元素占位/flex自适应布局css****⭐⭐ */
+/* 行或列只有一个元素的话,1就是全部 即flex:1占满剩余空间 最大可以分为24等份 */
+/* .flex1和.flex-1效果是一模一样的 底层代码也完全一样 flex-1在语义上更有布局的含义*/
+@for $i from 1 through 23 {
+	.flex-#{$i} {
+		&:hover{
+			overflow: overlay;
+		}
+		flex: $i;
+		overflow: hidden;
+	}
+}
+
 /* ------------------------------间距调整类------------------------------ */
 /*外间距css*/
 @for $i from 1 through 20 {
 	.margin#{$i * 10} {
-		margin:$i * 10px
+		margin:$i * $spacingNum * 10px
 	}
 }
 
 /*外水平间距css*/
 @for $i from 1 through 20 {
 	.marginlr#{$i * 10} {
-		margin-left: $i * 10px;
-		margin-right: $i * 10px;
+		margin-left: $i * $spacingNum * 10px;
+		margin-right: $i * $spacingNum * 10px;
 	}
 }
 
 /*外垂直间距css*/
 @for $i from 1 through 20 {
 	.margintb#{$i * 10} {
-		margin-top: $i * 10px;
-		margin-bottom: $i * 10px;
+		margin-top: $i * $spacingNum * 10px;
+		margin-bottom: $i * $spacingNum * 10px;
 	}
 }
 
 /* 列间距gutter 需配合flex布局使用 多用于横向滚动盒子内元素的间距拉开*/
 @for $i from 1 through 10 {
 	.gutter#{$i * 10} {
-		overflow: auto;
+		overflow: overlay;
 		> *{
-			margin-right: $i * 10px;
+			margin-right: $i * $spacingNum * 10px;
 			&:last-child{
 				margin-right: 0;
 			}
@@ -884,23 +1402,23 @@ body {
 /*内间距css*/
 @for $i from 1 through 20 {
 	.padding#{$i * 10} {
-		padding: $i * 10px;
+		padding: $i * $spacingNum * 10px;
 	}
 }
 
 /*内水平间距css*/
 @for $i from 1 through 20 {
 	.paddinglr#{$i * 10} {
-		padding-left: $i * 10px;
-		padding-right: $i * 10px;
+		padding-left: $i * $spacingNum * 10px;
+		padding-right: $i * $spacingNum * 10px;
 	}
 }
 
 /*内垂直间距css*/
 @for $i from 1 through 20 {
 	.paddingtb#{$i * 10} {
-		padding-top: $i * 10px;
-		padding-bottom: $i * 10px;
+		padding-top: $i * $spacingNum * 10px;
+		padding-bottom: $i * $spacingNum * 10px;
 	}
 }
 
@@ -908,28 +1426,28 @@ body {
 /* ----------单方向左内间距---------- */
 @for $i from 1 through 20 {
 	.padding-left-#{$i * 10} {
-		padding-left: $i * 10px;
+		padding-left: $i * $spacingNum * 10px;
 	}
 }
 
 /* ----------单方向右内间距---------- */
 @for $i from 1 through 20 {
 	.padding-right-#{$i * 10} {
-		padding-right: $i * 10px;
+		padding-right: $i * $spacingNum * 10px;
 	}
 }
 
 /* ----------单方向上内间距---------- */
 @for $i from 1 through 20 {
 	.padding-top-#{$i * 10} {
-		padding-top: $i * 10px;
+		padding-top: $i * $spacingNum * 10px;
 	}
 }
 
 /* ----------单方向下内间距---------- */
 @for $i from 1 through 20 {
 	.padding-bottom-#{$i * 10} {
-		padding-bottom: $i * 10px;
+		padding-bottom: $i * $spacingNum * 10px;
 	}
 }
 
@@ -937,28 +1455,28 @@ body {
 /* ----------单方向左外间距---------- */
 @for $i from 1 through 20 {
 	.margin-left-#{$i * 10} {
-		margin-left: $i * 10px;
+		margin-left: $i * $spacingNum * 10px;
 	}
 }
 
 /* ----------单方向右外间距---------- */
 @for $i from 1 through 20 {
 	.margin-right-#{$i * 10} {
-		margin-right: $i * 10px;
+		margin-right: $i * $spacingNum * 10px;
 	}
 }
 
 /* ----------单方向上外间距---------- */
 @for $i from 1 through 20 {
 	.margin-top-#{$i * 10} {
-		margin-top: $i * 10px;
+		margin-top: $i * $spacingNum * 10px;
 	}
 }
 
 /* ----------单方向下外间距---------- */
 @for $i from 1 through 20 {
 	.margin-bottom-#{$i * 10} {
-		margin-bottom: $i * 10px;
+		margin-bottom: $i * $spacingNum * 10px;
 	}
 }
 
@@ -967,41 +1485,41 @@ body {
 /* 整体内间距 */
 @for $i from 1 through 10 {
 	.inner-padding-#{$i * 10} > * {
-		padding: $i * 10px;
+		padding: $i * $spacingNum * 10px;
 	}
 }
 /* 整体外间距 */
 @for $i from 1 through 10 {
 	.inner-margin-#{$i * 10} > * {
-		margin: $i * 10px;
+		margin: $i * $spacingNum * 10px;
 	}
 }
 /* 上下内间距 */
 @for $i from 1 through 10 {
 	.inner-paddingtb-#{$i * 10} > * {
-		padding-top: $i * 10px;
-		padding-bottom: $i * 10px;
+		padding-top: $i * $spacingNum * 10px;
+		padding-bottom: $i * $spacingNum * 10px;
 	}
 }
 /* 左右内间距 */
 @for $i from 1 through 10 {
 	.inner-paddinglr-#{$i * 10} > * {
-		padding-left: $i * 10px;
-		padding-right: $i * 10px;
+		padding-left: $i * $spacingNum * 10px;
+		padding-right: $i * $spacingNum * 10px;
 	}
 }
 /* 上下外间距 */
 @for $i from 1 through 10 {
 	.inner-margintb-#{$i * 10} > * {
-		margin-top: $i * 10px;
-		margin-bottom: $i * 10px;
+		margin-top: $i * $spacingNum * 10px;
+		margin-bottom: $i * $spacingNum * 10px;
 	}
 }
 /* 左右外间距 */
 @for $i from 1 through 10 {
 	.inner-marginlr-#{$i * 10} > * {
-		margin-left: $i * 10px;
-		margin-right: $i * 10px;
+		margin-left: $i * $spacingNum * 10px;
+		margin-right: $i * $spacingNum * 10px;
 	}
 }
 
@@ -1009,27 +1527,27 @@ body {
 /* 单方内间距(上) */
 @for $i from 1 through 10 {
 	.inner-padding-top-#{$i * 10} > * {
-		padding-top: $i * 10px;
+		padding-top: $i * $spacingNum * 10px;
 	}
 }
 /* 单方内间距(下) */
 @for $i from 1 through 10 {
 	.inner-padding-bottom-#{$i * 10} > * {
-		padding-bottom: $i * 10px;
+		padding-bottom: $i * $spacingNum * 10px;
 	}
 }
 
 /* 单方内间距(左) */
 @for $i from 1 through 10 {
 	.inner-padding-left-#{$i * 10} > * {
-		padding-left: $i * 10px;
+		padding-left: $i * $spacingNum * 10px;
 	}
 }
 
 /* 单方内间距(右) */
 @for $i from 1 through 10 {
 	.inner-padding-right-#{$i * 10} > * {
-		padding-right: $i * 10px;
+		padding-right: $i * $spacingNum * 10px;
 	}
 }
 
@@ -1037,27 +1555,27 @@ body {
 /* 单方外间距(上) */
 @for $i from 1 through 10 {
 	.inner-margin-top-#{$i * 10} > * {
-		margin-top: $i * 10px;
+		margin-top: $i * $spacingNum * 10px;
 	}
 }
 /* 单方外间距(下) */
 @for $i from 1 through 10 {
 	.inner-margin-bottom-#{$i * 10} > * {
-		margin-bottom: $i * 10px;
+		margin-bottom: $i * $spacingNum * 10px;
 	}
 }
 
 /* 单方外间距(左) */
 @for $i from 1 through 10 {
 	.inner-margin-left-#{$i * 10} > * {
-		margin-left: $i * 10px;
+		margin-left: $i * $spacingNum * 10px;
 	}
 }
 
 /* 单方外间距(右) */
 @for $i from 1 through 10 {
 	.inner-margin-right-#{$i * 10} > * {
-		margin-right: $i * 10px;
+		margin-right: $i * $spacingNum * 10px;
 	}
 }
 
@@ -1301,7 +1819,23 @@ body {
 	overflow: hidden;
 }
 .of-scroll:hover{
-	overflow:auto
+	overflow: overlay;
+}
+
+/* ------------------------------动画类------------------------------ */
+/* 滑动显现 (需设定盒子显现后的高度)*/
+.slide-up{
+	animation: hoverSlide .7s forwards;
+}
+/* 滑动收起 (需设定盒子收起前的高度)*/
+.slide-down{
+	animation: slideDown .7s forwards;
+}
+@keyframes slideDown {
+	100%{
+		height: 0;
+		overflow: hidden;
+	}
 }
 
 /* --------------------其他类-------------------- */
@@ -1423,3 +1957,11 @@ body {
 // 2021-11-17更新:新增全局hover类，新增高度为100%的高度类.h100，调整zindex层级的数值并增加优先级，滚动条样式修正，增加最小高度类，调整元素宽度和高度的步进值为10px，隐性增加了宽度为0，高度为0的类width0，height0
 // 2021-11-18更新:新增改变元素变换原点的类
 // 2021-11-21更新:修正极致色为文字、边框、填充三种类型，背景颜色变量更名为$page-color(因bg和fill几乎同义,容易混淆)。新增以页面背景色作为色块填充色的fill类，调整hover为普通效果和轻微效果
+// 2021-12-29更新:新增2个文字效果类 文字描边和文字阴影
+// 2021-12-31更新:overflow滚动条细节调整，pc端默认overflow都是hidden，只有鼠标滑入的时候才显示滚动条。stretch下所有子元素在内容溢出时鼠标滑入显示滚动条。修改overflow溢出值auto为overlay。滚动条样式修复。
+// 2022-01-16更新:新增4种hover显现效果的类，新增只出现手型的hover类 .hover-ol
+// 2022-01-17更新:初始化元素时 允许长单词或url自动折行
+// 2022-01-25更新:区分hover出现时为盒子内出现和盒子外出现，扩展高度百分比.h类
+// 2022-01-26更新:新增动画类滑动显现和滑动隐藏
+// 2022-03-24更新:新增flex栅格布局类.flex-x
+// 2022-03-29更新:新增自由系数

@@ -93,4 +93,27 @@ export default {
 	//更新权限权限的接口
 	edit_power_root:'/api/patch/power-power/',
 	
+	// ------------字典操作------------
+	//字典列表的接口
+	dictionary_list_url:'/api/get/basics-array/',
+	//下载所选字典的接口
+	download_dictionary_url:'/api/download/basics-active/',
+	//审核所选字典的接口
+	check_dictionary_url:'/api/state/basics-on/',
+	//反审所选字典的接口
+	uncheck_dictionary_url:'/api/state/basics-off/',
+	//table内审核字典的接口
+	table_check_dictionary:'/api/state/basics/',
+	//table内删除字典的接口
+	table_del_dictionary:'/api/delete/basics/',
+	//删除所选字典的接口
+	del_dictionary_url:'/api/delete/basics-active/',
+	//创建字典的接口
+	create_dictionary_url:'/api/create/basics/',
+	//编辑字典信息的接口
+	editdictionary_url:'/api/patch/basics/?id=',
+	//获取字典信息数据的接口
+	formdictionary_url:'/api/get/basics-data/',
+	//更新字典权限的接口
+	edit_dictionary_root:'/api/patch/basics-power/',
 }

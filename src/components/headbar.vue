@@ -5,12 +5,16 @@
 		</div>
 		<div class="inner-left inner-padding-20">
 			<transition enter-active-class="animate__fadeInLeft time-3" leave-active-class="animate__fadeOutLeft" class="animate__animated">
-				<div class="paddinglr50 scale-lg-1 or" v-if="$menu_current !== '/index'">
-					<el-button-group>
+				<div class="paddinglr50 scale-lg-1 or positionbox" v-if="$menu_current !== '/index'">
+					<el-button-group class="zindex-up-1">
 					  <el-button class="hover-sm" type="primary" size="mini" plain @click="createuser">创建用户</el-button>
 					  <el-button class="hover-sm" type="primary" size="mini" plain @click="createrole">创建角色</el-button>
 					  <el-button class="hover-sm" type="primary" size="mini" plain @click="createroot">创建权限</el-button>
+					  <el-button class="hover-sm" type="primary" size="mini" plain @click="createdictionary">创建字典</el-button>
 					</el-button-group>
+					<div class="pcenter border-around-dark-1 border-color-matchC height40 width320 positionbox Move-to-left-10 radiusfix">
+						<span class="pleft Move-to-left-20 fill-color-white font-10 text-weight text-color-matchC">admin</span>
+					</div>
 				</div>
 			</transition>
 			<i class="custom-icon-fullscreen custom-icon font-25" @click="isScreenFull"></i>
@@ -40,6 +44,8 @@
 	<create-role v-if="$showrole"></create-role>
 	<!-- 创建权限的弹窗 -->
 	<create-root v-if="$showroot"></create-root>
+	<!-- 创建字典的弹窗 -->
+	<create-dictionary v-if="$showdictionary"></create-dictionary>
 </template>
 
 <script setup>
@@ -140,6 +146,11 @@
 	const createroot = ()=>{
 		store.vuex('$showroot',true)
 	}
+	// 创建权限
+	import createDictionary from '@/components/createdictionary.vue'
+	const createdictionary = ()=>{
+		store.vuex('$showdictionary',true)
+	}
 </script>
 
 <style scoped>
@@ -150,5 +161,9 @@
 
 	.el-icon-arrow-down {
 		font-size: 12px;
+	}
+	.radiusfix{
+		border-radius: 3px;
+		border-style: dashed;
 	}
 </style>

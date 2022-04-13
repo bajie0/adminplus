@@ -3,7 +3,7 @@
 	<div class="height70 inner-center homehover" @click="gohome">
 		<transition leave-active-class="animate__fadeOutLeft" mode="out-in" enter-active-class="animate__fadeInLeft"
 			class="time-2 animate__animated">
-			<div v-if="!$isCollapse">admin后台系统</div>
+			<div v-if="!$isCollapse" class="text-weight font-20 text-space-3">admin后台系统</div>
 			<i class="custom-icon custom-icon-aixibao font-30" v-else></i>
 		</transition>
 	</div>
@@ -13,7 +13,7 @@
 			<el-sub-menu v-if="item.children?.length" :index="index + '' + item.path">
 				<template #title>
 					<i class="custom-icon font-25 padding-right-20" :class="'custom-icon-' + item.icon"></i>
-					<span>{{item.name}}</span>
+					<span class="text-weight font-15">{{item.name}}</span>
 				</template>
 				<el-menu-item @click="menuchange(items)" :index="'/index' + items.path"
 					v-for="(items,indexs) in item.children" :key="indexs">
@@ -25,7 +25,9 @@
 			</el-sub-menu>
 			<el-menu-item :index="'/index' + item.path" v-else @click="menuchange(item)">
 				<i class="custom-icon font-25 padding-right-20" :class="'custom-icon-' + item.icon"></i>
-				<template #title>{{item.name}}</template>
+				<template #title>
+					<span class="text-weight font-15">{{item.name}}</span>
+				</template>
 			</el-menu-item>
 		</template>
 	</el-menu>
@@ -93,7 +95,6 @@
 <style scoped lang="scss">
 	// 引入全局主题scss变量
 	@import '@/libs/theme.scss';
-
 	.el-menu {
 		background-color: $assist-color;
 	}

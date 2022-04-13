@@ -48,7 +48,7 @@
 	function getside () {
 		let url = store.$url.sidebar_url
 		store.$api.get(url,{'code': 'Central'}).then(res => {
-			console.log(res)
+			// console.log(res)
 			menulist.value = res.data
 		})
 	}
