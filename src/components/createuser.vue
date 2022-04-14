@@ -186,6 +186,7 @@
 			formdata.value = res
 			if(res.avatar){
 				imageUrl.value = store.state.$base_url + '/static/upload' + res.avatar
+				console.log(imageUrl.value)
 			}
 		})
 	}

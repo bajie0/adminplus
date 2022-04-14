@@ -91,7 +91,28 @@ const routes = [
 				meta: {
 					title: '权限操作',
 				}
-			}
+			},
+			// {
+			// 	path: 'operate_user',
+			// 	component: () => import('../views/operate_user'),
+			// 	meta: {
+			// 		title: '用户操作',
+			// 	}
+			// },
+			// {
+			// 	path: 'operate_role',
+			// 	component: () => import('../views/operate_role'),
+			// 	meta: {
+			// 		title: '角色操作',
+			// 	}
+			// },
+			// {
+			// 	path: 'operate_dictionary',
+			// 	component: () => import('../views/operate_dictionary'),
+			// 	meta: {
+			// 		title: '字典操作',
+			// 	}
+			// }
 		]
 	},
 

@@ -24,12 +24,12 @@
 						<span class="text-color-warning">*</span>
 						<div>字典分类</div>
 					</div>
-					<el-radio-group v-model="formdata.power_class">
+					<el-radio-group v-model="formdata.basics_class">
 						<el-radio-button :label="1">分类级</el-radio-button>
 						<el-radio-button :label="2">数据级</el-radio-button>
 					</el-radio-group>
 				</div>
-				<div class="inner-left gutter10 width-11" v-if="formdata.power_class == 2">
+				<div class="inner-left gutter10 width-11" v-if="formdata.basics_class == 2">
 					<div class="inner-left flex-fixed">
 						<span class="text-color-warning">*</span>
 						<div>上级字典</div>
@@ -96,7 +96,7 @@
 	const tree_data = ref([])
 	//定义获取字典tree数据的方法
 	function getdictionaryTree() {
-		const url = store.$url.dictionary_url
+		const url = store.$url.tree_dictionary_url
 		store.$api.get(url).then(res => {
 			console.log(res)
 			if (res.data.length) {
@@ -107,22 +107,22 @@
 						value: item.id,
 						label: item.label
 					})
-					if (item.children?.length) {
-						for (let items of item.children) {
-							tree_data.value.push({
-								value: items.id,
-								label: items.label
-							})
-							if (items.children?.length) {
-								for (let itemss of items.children) {
-									tree_data.value.push({
-										value: itemss.id,
-										label: itemss.label
-									})
-								}
-							}
-						}
-					}
+					// if (item.children?.length) {
+					// 	for (let items of item.children) {
+					// 		tree_data.value.push({
+					// 			value: items.id,
+					// 			label: items.label
+					// 		})
+					// 		if (items.children?.length) {
+					// 			for (let itemss of items.children) {
+					// 				tree_data.value.push({
+					// 					value: itemss.id,
+					// 					label: itemss.label
+					// 				})
+					// 			}
+					// 		}
+					// 	}
+					// }
 				}
 			}
 		})
@@ -164,7 +164,7 @@
 	// 表单数据
 	const formdata = ref({
 		// 字典类别
-		power_class: null,
+		basics_class: null,
 		// 上级字典
 		parent: '',
 		// 字典标题
@@ -173,12 +173,6 @@
 		code: '',
 		// 字典描述
 		content: '',
-		// 字典路径
-		path: '',
-		// 字典图标
-		icon: '',
-		// 字典排序
-		sort: 0
 	})
 	// 字典名称转拼音简码
 	import {
@@ -195,15 +189,6 @@
 			//调取manage_dictionary组件的刷新table方法,重新获取table数据
 			//发射全局事件
 			store.$bus.emit('dictionaryRefresh')
-			store.$bus.emit('refreshSide')
-			//更新$tablist数组为修改后的tab
-			for (let i in store.state.$tablist) {
-				if(store.state.$tablist[i].name == pathname){
-					store.state.$tablist[i].title = formdata.value.title
-					store.vuex('$tablist', store.state.$tablist)
-					break
-				}
-			}
 			//清空列表
 			for (let index in formdata.value) {
 				formdata.value[index] = ''
@@ -226,25 +211,15 @@
 			message: "请输入字典简码",
 			type: "error"
 		})
-		if (!formdata.value.power_class) return ElMessageBox({
+		if (!formdata.value.basics_class) return ElMessageBox({
 			title: "信息输入不完整",
 			message: "请选择字典分类",
 			type: "error"
 		})
-		if (!formdata.value.parent) return ElMessageBox({
-			title: "信息输入不完整",
-			message: "请选择上级字典",
-			type: "error"
-		})
-		if (formdata.value.power_class == 2) {
-			if (!formdata.value.path) return ElMessageBox({
+		if (formdata.value.basics_class == 2) {
+			if (!formdata.value.parent) return ElMessageBox({
 				title: "信息输入不完整",
-				message: "请输入页面路径",
-				type: "error"
-			})
-			if (!formdata.value.icon) return ElMessageBox({
-				title: "信息输入不完整",
-				message: "请选择页面图标",
+				message: "请选择上级字典",
 				type: "error"
 			})
 		}
@@ -256,28 +231,23 @@
 		checkform().then(res => {
 			if (res === true) {
 				// 调创建表单的接口
-				const url = store.$url.create_power_url
+				const url = store.$url.create_dictionary_url
 				submit(url)
 			}
 		})
 	}
 	// 如果是编辑字典,则接收事件总线的formdatadictionary事件
-	let pathname = ''
 	if (store.state.$params) {
 		store.$bus.on('formdatadictionary', res => {
 			console.log(res)
-			pathname = res.path
 			//表单赋值
 			formdata.value.title = res.title
 			setTimeout(() => {
 				formdata.value.code = res.code
 			});
-			formdata.value.power_class = res.power_class
+			formdata.value.basics_class = res.basics_class
 			formdata.value.parent = res.parent
-			formdata.value.path = res.path
-			formdata.value.icon = res.icon
 			formdata.value.content = res.content
-			formdata.value.sort = res.sort
 		})
 	}
 	// 点击编辑提交表单
@@ -286,7 +256,7 @@
 		checkform().then(res => {
 			if (res === true) {
 				// 调创建表单的接口
-				const url = store.$url.editpower_url + store.state.$params
+				const url = store.$url.editdictionary_url + store.state.$params
 				submit(url)
 			}
 		})

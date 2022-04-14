@@ -3,6 +3,9 @@
 </template>
 
 <style lang="scss">
+	*{
+		font-size: 12px;
+	}
 	// 引入通用类库
 	@import 'libs/common-pc.scss';
 	// 引入字体图标

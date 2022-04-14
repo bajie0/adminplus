@@ -3,6 +3,7 @@ import qs from "qs"
 import {
 	store
 } from '../store/index.js'
+import config from '../config/config.js'
 import {
 	ElMessageBox
 } from 'element-plus'
@@ -13,9 +14,9 @@ import router from '../router/index.js'
 
 //1.创建axios实例，封装axios全局配置
 const instance = axios.create({
-	baseURL: 'http://10.255.52.165:8000/',
+	baseURL: config.baseURL,
 	// baseURL: 'http://localhost:8083/interface',
-	timeout: 5000
+	timeout: 10000
 })
 // 2.封装axios实例的拦截器
 // 2.1请求拦截
@@ -40,25 +41,16 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
 	// 响应成功的拦截
 	response => {
-		// 数据获取成功
+		// 数据获取(查)成功
 		if (response.data.code === 200) {
 			return Promise.resolve(response)
 		}
-		// 数据读取或写入或查询失败
+		// 数据更改(增、删、改)成功
 		if (response.data.code === 201) {
-			ElMessageBox({
-				title:'错误',
-				type: 'error',
-				message: response.data.message
-			})
-			return Promise.reject(response)
-		}
-		// 数据更改成功
-		if (response.data.code === 202 || response.data.code === 203 || response.data.code === 204 || response.data.code === 206) {
 			ElMessage.success(response.data.message)
 			return Promise.resolve(response)
 		}
-		// 请求方法错误
+		// 数据更改或获取(增、删、改、查)失败
 		if (response.data.code === 400) {
 			ElMessageBox({
 				title:'错误',
@@ -95,18 +87,18 @@ const post = (url, data) => {
 	return instance.post(url, qs.stringify(data, {
 		arrayFormat: 'brackets'
 	})).then(res => {
-		return Promise.resolve(res.data)
+		return res.data
 	}).catch(err => {
-		return Promise.reject(err)
+		throw err
 	})
 }
 const get = (url, data) => {
 	return instance.get(url, {
 		params: data,
 	}).then(res => {
-		return Promise.resolve(res.data) 
+		return res.data
 	}).catch(err => {
-		return Promise.reject(err)
+		throw err
 	})
 }
 // 4.导出封装完成的请求方法

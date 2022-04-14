@@ -85,7 +85,7 @@
 	import router from '../router/index.js'
 	const gohome = () => {
 		router.push('/index')
-		store.vuex('$menu_current', '/index')
+		// store.vuex('$menu_current', '/index')
 	}
 	// sidebar宽度
 	const sidebar_width = computed(() => {

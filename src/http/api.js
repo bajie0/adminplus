@@ -116,4 +116,6 @@ export default {
 	formdictionary_url:'/api/get/basics-data/',
 	//更新字典权限的接口
 	edit_dictionary_root:'/api/patch/basics-power/',
+	//获取字典tree的接口
+	tree_dictionary_url:'/api/get/basics-tree/',
 }

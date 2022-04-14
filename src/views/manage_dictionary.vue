@@ -72,16 +72,20 @@
 				v-loading="tableLoading" @selection-change="operateSelection">
 				<el-table-column type="expand">
 					<template v-slot="data">
-						<div class="inner-left inner-margin-20 paddinglr40">
-							<template v-if="data.row.role?.length">
-								<div class="width140 height90 hover border-around-dark-1 borderfix positionbox inner-center"
-									v-for="(item,index) in data.row.role" :key="index" @click="roleclick(item)">
-									<div class="fill-color-main prt text-color-white rolefix">角色{{index + 1}}</div>
+						<div class="inner-left paddinglr40" :class="data.row.child.length? 'inner-margin-20' : ''">
+							<template v-if="data.row.child.length">
+								<div class="hover-sm width140 height90 border-around-dark-1 borderfix positionbox inner-center"
+									v-for="(item,index) in data.row.child" :key="index" @click="dictionaryclick(item)">
+									<div class="fill-color-main prt text-color-white rolefix">字典数据{{index + 1}}</div>
 									<div>{{item.title}}</div>
+									<div class="slfd-in-br custom-icon custom-icon-close text-color-warning text-weight"
+										@click.stop="deldictionary(item)"></div>
 								</div>
 							</template>
 							<div v-else class="inner-center width-24">
-								<el-empty description="无字典数据信息"></el-empty>
+								<el-empty v-if="data.row.basics_class == 1" description="无字典数据信息" :image-size="70">
+								</el-empty>
+								<div v-else class="paddingtb10 text-color-black-light font-10">本身已是数据级字典</div>
 							</div>
 						</div>
 					</template>
@@ -95,13 +99,18 @@
 						<el-tag v-if="data.row.basics_class === 2" type="success">数据级</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column prop="parent" label="上级字典"> </el-table-column>
-				<el-table-column label="是否首选" width="100">
+				<el-table-column label="上级字典">
+					<template v-slot="data">
+						<div v-if="data.row.parent">{{data.row.parent}}</div>
+						<div v-else class="text-color-black-lighter">——</div>
+					</template>
+				</el-table-column>
+				<!-- 				<el-table-column label="是否首选" width="100">
 					<template v-slot="data">
 						<el-switch v-model="data.row.prefer" @click.stop @change="prefer(data.row,$event)">
 						</el-switch>
 					</template>
-				</el-table-column>
+				</el-table-column> -->
 				<el-table-column label="审核状态" width="100">
 					<template v-slot="data">
 						<el-switch v-model="data.row.state" @click.stop @change="tablecheck(data.row,$event)">
@@ -112,7 +121,8 @@
 					<template v-slot="data">
 						<el-button-group>
 							<el-button type="primary" size="mini" plain @click.stop="edit(data.row)">编辑</el-button>
-							<el-button type="primary" size="mini" plain @click.stop="tabledel(data.row)">删除</el-button>
+							<el-button type="primary" size="mini" plain @click.stop="tabledel(data.row)">删除
+							</el-button>
 						</el-button-group>
 					</template>
 				</el-table-column>
@@ -248,17 +258,14 @@
 	//展开某一行
 	const rowclick = (row) => {
 		tableref.value.toggleRowExpansion(row)
-		// 获取字典展开后的角色数据
-		// getdictionarydata(row).then(res=>{
-
-		// })
 	}
 	//展开某一行的字典以后查看其下的字典数据(编辑字典)
-	const roleclick = (item) => {
-		// console.log(item)
-		// store.vuex('$showrole', true)
-		// // 调回传表单信息的接口
-
+	const dictionaryclick = (item) => {
+		edit(item)
+	}
+	//展开某一行以后删除行内的字典数据
+	const deldictionary = (item) => {
+		tabledel(item)
 	}
 	//全部展开
 	const allopen = () => {
@@ -318,7 +325,7 @@
 			type: 'error'
 		})
 		// 调审核所选的接口
-		const url = store.$url.check_url
+		const url = store.$url.check_dictionary_url
 		store.$api.get(url, {
 			id: multipleTable
 		}).then(res => {
@@ -333,7 +340,7 @@
 			type: 'error'
 		})
 		// 调审核所选的接口
-		const url = store.$url.uncheck_url
+		const url = store.$url.uncheck_dictionary_url
 		store.$api.get(url, {
 			id: multipleTable
 		}).then(res => {
@@ -502,8 +509,10 @@
 		})
 	}
 	// 页面卸载时取消全局事件的监听
-	import { onUnmounted } from "vue"
-	onUnmounted(()=>{
+	import {
+		onUnmounted
+	} from "vue"
+	onUnmounted(() => {
 		store.$bus.off('dictionaryRefresh')
 	})
 </script>

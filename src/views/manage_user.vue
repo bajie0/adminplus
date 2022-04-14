@@ -72,16 +72,18 @@
 				v-loading="tableLoading" @selection-change="operateSelection">
 				<el-table-column type="expand">
 					<template v-slot="data">
-						<div class="inner-left inner-margin-20 paddinglr40">
+						<div class="inner-left paddinglr40" :class="data.row.role.length? 'inner-margin-20' : ''">
 							<template v-if="data.row.role?.length">
-								<div class="width140 height90 hover border-around-dark-1 borderfix positionbox inner-center"
+								<div class="width140 hover-sm height90 hover border-around-dark-1 borderfix positionbox inner-center"
 									v-for="(item,index) in data.row.role" :key="index" @click="roleclick(item)">
 									<div class="fill-color-main prt text-color-white rolefix">角色{{index + 1}}</div>
 									<div>{{item.title}}</div>
+									<div class="slfd-in-br custom-icon custom-icon-close text-color-warning text-weight"
+										@click.stop="delrole(item,data.row)"></div>
 								</div>
 							</template>
 							<div v-else class="inner-center width-24">
-								<el-empty description="无角色信息"></el-empty>
+								<el-empty description="无角色信息" image-size="70"></el-empty>
 							</div>
 						</div>
 					</template>
@@ -259,10 +261,38 @@
 	}
 	//展开某一行的用户以后查看其下的角色(编辑角色)
 	const roleclick = (item) => {
-		console.log(item)
+		//将要操作的条目的id写入vuex中
+		store.vuex('$params', item.id)
+		//打开编辑角色弹窗
 		store.vuex('$showrole', true)
-		// 调回传表单信息的接口
-
+		//请求表单内数据
+		const url = store.$url.formrole_url
+		store.$api.get(url, {
+			id: store.state.$params
+		}).then(res => {
+			console.log(res)
+			//通过事件总线传递一个formdatarole事件到弹窗组件
+			store.$bus.emit('formdatarole', res.data[0])
+		})
+	}
+	//展开某一行以后删除行内的角色数据
+	const delrole = (item,row) => {
+		ElMessageBox.confirm('删除后将无法恢复，确认删除？', {
+			type: 'warning'
+		}).then(res=>{
+			const index = row.role.findIndex(items => items.id == item.id)
+			row.role.splice(index,1)
+			let arr = []
+			for (let item of row.role) {
+				arr.push(item.id)
+			}
+			//调修改用户下绑定角色的接口
+			const url = store.$url.edit_user_role_url
+			store.$api.post(url, {
+				id:row.id,
+				role: arr
+			})
+		})
 	}
 	//全部展开
 	const allopen = () => {
@@ -399,7 +429,7 @@
 		console.log(row)
 		//将要操作的条目的id写入vuex中
 		store.vuex('$params', row.id)
-		//打开编辑用户弹窗
+		//打开编辑角色弹窗
 		store.vuex('$showuser', true)
 		//请求表单内数据
 		const url = store.$url.formuser_url
@@ -482,14 +512,13 @@
 	//分配角色对话框点击确定
 	const confirm = () => {
 		//调修改用户下绑定角色的接口
-		const url = store.$url.edit_user_role_url + tree_id
+		const url = store.$url.edit_user_role_url
 		store.$api.post(url, {
+			id:tree_id,
 			role: checkedroles.value
 		}).then(res => {
 			getTableJson()
 			dialogVisible.value = false
-			//通过事件总线发出刷新侧边栏菜单的事件 重新获取菜单栏数据
-			store.$bus.emit('refreshSide')
 		})
 	}
 	// 页面卸载时取消全局事件的监听

@@ -1,40 +1,39 @@
 <template>
 	<div class="inner-justify border-bottom-light-1 height70 text-color-black-middle fill-color-white">
 		<div class="inner-left height70">
-			<i class="custom-icon custom-icon-unie700 font-30 self-top hover" @click="changebar"></i>
+			<i class="custom-icon iconfix custom-icon-unie700 font-30 self-top hover-sm fill-color-assist text-color-white" @click="changebar"></i>
 		</div>
-		<div class="inner-left inner-padding-20">
+		<div class="inner-left inner-paddinglr-10">
 			<transition enter-active-class="animate__fadeInLeft time-3" leave-active-class="animate__fadeOutLeft" class="animate__animated">
-				<div class="paddinglr50 scale-lg-1 or positionbox" v-if="$menu_current !== '/index'">
-					<el-button-group class="zindex-up-1">
-					  <el-button class="hover-sm" type="primary" size="mini" plain @click="createuser">创建用户</el-button>
-					  <el-button class="hover-sm" type="primary" size="mini" plain @click="createrole">创建角色</el-button>
-					  <el-button class="hover-sm" type="primary" size="mini" plain @click="createroot">创建权限</el-button>
-					  <el-button class="hover-sm" type="primary" size="mini" plain @click="createdictionary">创建字典</el-button>
+				<div class="paddinglr50 scale-lg-2 or" v-if="$tablist.length">
+					<el-button-group>
+					  <el-button type="primary" size="mini" plain @click="createuser">创建用户</el-button>
+					  <el-button type="primary" size="mini" plain @click="createrole">创建角色</el-button>
+					  <el-button type="primary" size="mini" plain @click="createroot">创建权限</el-button>
+					  <el-button type="primary" size="mini" plain @click="createdictionary">创建字典</el-button>
 					</el-button-group>
-					<div class="pcenter border-around-dark-1 border-color-matchC height40 width320 positionbox Move-to-left-10 radiusfix">
-						<span class="pleft Move-to-left-20 fill-color-white font-10 text-weight text-color-matchC">admin</span>
-					</div>
 				</div>
 			</transition>
-			<i class="custom-icon-fullscreen custom-icon font-25" @click="isScreenFull"></i>
-			<i class="custom-icon custom-icon-sound font-25"></i>
-			<div class="inner-left inner-padding-10">
-				<el-image class="circle-box-50"
-					src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201712%2F15%2F20171215221023_KiYWM.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1638365310&t=24358d08ec4346327c4c19dab1213278">
-				</el-image>
-				<el-dropdown @command="changemode">
-					<span class="el-dropdown-link text-color-black-middle">
-						小戒<i class="el-icon-arrow-down el-icon--right"></i>
-					</span>
-					<template #dropdown>
-						<el-dropdown-menu>
-							<el-dropdown-item command="darkmode">{{$isdark? '明亮模式' : '暗黑模式'}}</el-dropdown-item>
-							<el-dropdown-item command="changeanimate">{{$openanimate? '关闭动画' : '开启动画'}}</el-dropdown-item>
-							<el-dropdown-item command="exit">退出</el-dropdown-item>
-						</el-dropdown-menu>
-					</template>
-				</el-dropdown>
+			<div class="inner-left gutter20 marginlr20">
+				<i class="custom-icon-fullscreen custom-icon font-25" @click="isScreenFull"></i>
+				<i class="custom-icon custom-icon-sound font-25"></i>
+				<div class="inner-left">
+					<el-image class="circle-box-30 boxshadow-light-10 margin-right-10fix"
+						src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201712%2F15%2F20171215221023_KiYWM.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1638365310&t=24358d08ec4346327c4c19dab1213278">
+					</el-image>
+					<el-dropdown @command="changemode">
+						<span class="el-dropdown-link text-color-black-middle font-10">
+							小戒<i class="el-icon-arrow-down el-icon--right"></i>
+						</span>
+						<template #dropdown>
+							<el-dropdown-menu>
+								<el-dropdown-item command="darkmode">{{$isdark? '明亮模式' : '暗黑模式'}}</el-dropdown-item>
+								<el-dropdown-item command="changeanimate">{{$openanimate? '关闭动画' : '开启动画'}}</el-dropdown-item>
+								<el-dropdown-item command="exit">退出</el-dropdown-item>
+							</el-dropdown-menu>
+						</template>
+					</el-dropdown>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -154,6 +153,9 @@
 </script>
 
 <style scoped>
+	.margin-right-10fix{
+		margin-right: 5px;
+	}
 	.el-dropdown-link {
 		cursor: pointer;
 		color: #409eff;
@@ -164,6 +166,14 @@
 	}
 	.radiusfix{
 		border-radius: 3px;
+		border-top-left-radius: 20px;
+		border-bottom-left-radius: 20px;
 		border-style: dashed;
+	}
+	.iconfix{
+		padding: 3px 0;
+		padding-right: 5px;
+		border-top-right-radius: 20px;
+		border-bottom-right-radius: 20px;
 	}
 </style>

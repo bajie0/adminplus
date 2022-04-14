@@ -1,6 +1,7 @@
 import {
 	createStore,mapState
 } from 'vuex'
+import config from '../config/config.js'
 
 let lifeData = {};
 try {
@@ -35,6 +36,8 @@ console.log($theme)
 const store = createStore({
 	// 下面这些值仅为示例，使用过程中请删除
 	state: {
+		//登录头像
+		$headimg:lifeData.$headimg ? lifeData.$headimg : null,
 		//编辑时rootId
 		$rootId:'',
 		//编辑时roleId
@@ -82,7 +85,7 @@ const store = createStore({
 		// 开启路由动画效果
 		$openanimate: lifeData.$openanimate != null ? lifeData.$openanimate : true,
 		// 请求域名
-		$base_url:'http://172.18.44.48:8090',
+		$base_url: config.baseURL,
 		//全局主题 这样做的目的是保证模板上可以直接使用
 		...$theme
 	},
