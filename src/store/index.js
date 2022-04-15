@@ -1,7 +1,6 @@
 import {
 	createStore,mapState
 } from 'vuex'
-import config from '../config/config.js'
 
 let lifeData = {};
 try {
@@ -85,7 +84,7 @@ const store = createStore({
 		// 开启路由动画效果
 		$openanimate: lifeData.$openanimate != null ? lifeData.$openanimate : true,
 		// 请求域名
-		$base_url: config.baseURL,
+		$base_url: 'http://10.255.52.165:8001',
 		//全局主题 这样做的目的是保证模板上可以直接使用
 		...$theme
 	},

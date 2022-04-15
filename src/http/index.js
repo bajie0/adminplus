@@ -3,7 +3,6 @@ import qs from "qs"
 import {
 	store
 } from '../store/index.js'
-import config from '../config/config.js'
 import {
 	ElMessageBox
 } from 'element-plus'
@@ -14,7 +13,7 @@ import router from '../router/index.js'
 
 //1.创建axios实例，封装axios全局配置
 const instance = axios.create({
-	baseURL: config.baseURL,
+	baseURL: store.state.$base_url,
 	// baseURL: 'http://localhost:8083/interface',
 	timeout: 10000
 })

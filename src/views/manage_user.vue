@@ -93,16 +93,18 @@
 				<el-table-column prop="title" label="姓名"></el-table-column>
 				<el-table-column label="头像">
 					<template v-slot="data">
-						<el-image :src="data.row.headimg" class="width50">
-							<template #error>
-								<div
-									class="custom-icon custom-icon-weibiaoti1 text-color-black-lighter font-35 inner-left square-box-50">
-								</div>
-							</template>
-						</el-image>
+						<div class="circle-box-40 inner-center">
+							<el-image class="circle-box-50" fit="cover" :src="$base_url + '/static/upload' + data.row.avatar">
+								<template #error>
+									<div
+										class="custom-icon custom-icon-weibiaoti1 text-color-black-lighter font-35 inner-left square-box-50">
+									</div>
+								</template>
+							</el-image>
+						</div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="phone" label="手机号"> </el-table-column>
+				<el-table-column prop="phone" label="手机号"></el-table-column>
 				<el-table-column prop="mail" label="邮箱"> </el-table-column>
 				<el-table-column prop="count" label="登录次数" width="100"> </el-table-column>
 				<el-table-column prop="last_time" label="上次登录时间"> </el-table-column>

@@ -4,7 +4,7 @@
 			<div class="flex-fixed paddinglr20 self-top">上传头像</div>
 			<el-upload class="avatar-uploader" :action="$base_url + $store.$url.uploadimg_url" :headers="{'token':vuex_token}"
 				:show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-				<img v-if="imageUrl" :src="imageUrl" class="avatar" />
+				<el-image v-if="imageUrl" fit="cover" :src="imageUrl" class="avatar" />
 				<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 			</el-upload>
 		</div>

@@ -74,30 +74,30 @@
 						<div class="inner-left paddinglr50 tc paddingtb20 text-weight">
 							<div class="width150">系统级</div>
 							<div class="separateline-light-1 height20"></div>
-							<div class="width200">页面级</div>
+							<div class="width150">页面级</div>
 							<div class="separateline-light-1 height20"></div>
 							<div class="flex1">功能级</div>
 						</div>
-						<div v-if="data.row.root?.length">
-							<div :class="data.row.root.length !== index + 1? 'border-bottom-light-1' :''"
-								class="marginlr40 inner-left inner-margin-10 paddinglr40"
-								v-for="(item,index) in data.row.root" :key="index" @click="rootclick(item)">
+						<div v-if="data.row.power_tree?.length">
+							<div :class="data.row.power_tree.length !== index + 1? 'border-bottom-light-1' :''"
+								class="marginlr40 inner-left inner-margin-10 paddinglr20"
+								v-for="(item,index) in data.row.power_tree" :key="index" @click="rootclick(item)">
 								<div class="width150 inner-paddingtb-10">
 									<div>
-										<el-tag class="hover-sm">{{item.title}}</el-tag>
+										<el-tag class="hover-sm">{{item.label}}</el-tag>
 									</div>
 								</div>
 								<div class="flex1">
 									<div v-for="(items,indexs) in item.children" :key="indexs"
 										:class="item.children.length !== indexs + 1? 'border-bottom-lighter-1' : ''"
 										class="inner-left" @click="rootclick(items)">
-										<div class="width200">
-											<el-tag class="hover-sm" type="success">{{items.title}}</el-tag>
+										<div class="width150">
+											<el-tag class="hover-sm" type="success">{{items.label}}</el-tag>
 										</div>
-										<div class="flex1 inner-left gutter20 height60">
+										<div class="flex1 wrap inner-margintb-10 inner-left gutter20 height60">
 											<div v-for="(itemss,indexss) in items.children" :key="indexss"
 												@click="rootclick(itemss)">
-												<el-tag class="hover-sm" type="warning">{{itemss.title}}</el-tag>
+												<el-tag class="hover-sm" type="warning">{{itemss.label}}</el-tag>
 											</div>
 										</div>
 									</div>
