@@ -69,7 +69,7 @@
 			store.$api.get(url).then(res => {
 				console.log(res)
 				//将该用户下的所有权限写入至vuex
-				store.vuex('$userRoots', res.data)
+				store.vuex('$permissions', res.data)
 			})
 		})
 	}

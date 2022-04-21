@@ -1,7 +1,7 @@
 <template>
 	<el-dialog :title="title" v-model="$store.state.$showdictionary" width="44%" @close="boxclose">
 		<div class="inner-padding-bottom-40 positionbox">
-			<i class="custom-icon custom-icon-export prt positionfix hover-sm" @click="scale"></i>
+			<!-- <i class="custom-icon custom-icon-export prt positionfix hover-ol" @click="scale"></i> -->
 			<div class="inner-left inner-paddinglr-20">
 				<div class="inner-left gutter10 width-11">
 					<div class="inner-left flex-fixed">

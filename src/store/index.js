@@ -10,7 +10,7 @@ try {
 
 }
 // 需要永久存储，且下次APP启动需要取出的，在state中的变量名
-let saveStateKeys = ['vuex_user','$userRoots', 'vuex_token', '$menu_current', '$tablist', '$side_width', '$isCollapse', '$isdark','$openanimate'];
+let saveStateKeys = ['vuex_user','$permissions', 'vuex_token', '$menu_current', '$tablist', '$side_width', '$isCollapse', '$isdark','$openanimate'];
 
 // 保存变量到本地存储中
 const saveLifeData = function(key, value) {
@@ -77,8 +77,8 @@ const store = createStore({
 		$roots:[],
 		// sidebar当前选中的菜单项
 		$menu_current: lifeData.$menu_current ? lifeData.$menu_current : '/index',
-		// 用户的权限数组
-		$userRoots:lifeData.$userRoots ? lifeData.$userRoots : [],
+		// ⭐⭐⭐⭐用户的权限数组⭐⭐⭐⭐
+		$permissions:lifeData.$permissions ? lifeData.$permissions : [],
 		// token
 		vuex_token: lifeData.vuex_token ? lifeData.vuex_token : '',
 		// 开启路由动画效果

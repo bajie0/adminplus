@@ -32,6 +32,8 @@ store.vuex = (name, value) => {
 import pinyin from 'js-pinyin'
 // 引入网络请求
 import * as api from './http/index.js'
+
+// ----非响应式全局数据的挂载----
 // 将网络请求挂载在store上
 store.$api = api
 // 将接口地址挂载在store上
@@ -42,9 +44,14 @@ store.$ws = 'ws://172.18.44.48:8090/ws/chat/30/'
 store.$bus = mitt();
 // 将pinyin挂载在store上
 store.$pinyin = pinyin
+
 // 引入富文本编辑器并注册全局组件 http://jsdawn.gitee.io/vue3-tinymce/
 import Vue3Tinymce from '@jsdawn/vue3-tinymce';
+// 创建根组件的实例
 const app = createApp(App)
+// 权限管理
+import permission from '@/permissions/index.js'
+app.directive('has', permission)
 // 原生XMLHttpRequest 配置图片上传token
 let req = XMLHttpRequest;
 (function(open, send) {

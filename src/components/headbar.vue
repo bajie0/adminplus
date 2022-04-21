@@ -4,7 +4,7 @@
 			<i class="custom-icon iconfix custom-icon-unie700 font-30 self-top hover-sm fill-color-assist text-color-white" @click="changebar"></i>
 		</div>
 		<div class="inner-left inner-paddinglr-10">
-			<transition enter-active-class="animate__fadeInLeft time-3" leave-active-class="animate__fadeOutLeft" class="animate__animated">
+			<transition v-has="'QuanXianKuaiJieCaiDan'" enter-active-class="animate__fadeInLeft time-3" leave-active-class="animate__fadeOutLeft" class="animate__animated">
 				<div class="paddinglr50 scale-lg-2 or" v-if="$tablist.length">
 					<el-button-group>
 					  <el-button type="primary" size="mini" plain @click="createuser">创建用户</el-button>
@@ -103,11 +103,11 @@
 						type: 'success',
 						message: '退出系统成功!',
 					});
-					store.vuex('vuex_token','')
-					//清除上一次登录的缓存
-					store.vuex('$tablist',[])
-					store.vuex('$menu_current',"/index")
-					store.vuex('$userRoots',[])
+					// store.vuex('vuex_token','')
+					// //清除上一次登录的缓存
+					// store.vuex('$tablist',[])
+					// store.vuex('$menu_current',"/index")
+					// store.vuex('$permissions',[])
 				})
 				.catch(() => {});
 		}

@@ -4,7 +4,7 @@
 
 <style lang="scss">
 	*{
-		font-size: 12px;
+		font-size: 14px;
 	}
 	// 引入通用类库
 	@import 'libs/common-pc.scss';

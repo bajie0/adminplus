@@ -85,13 +85,13 @@ const routes = [
 					title: '字典列表',
 				}
 			},
-			{
-				path: 'operate_root',
-				component: () => import('../views/operate_root'),
-				meta: {
-					title: '权限操作',
-				}
-			},
+			// {
+			// 	path: 'operate_root',
+			// 	component: () => import('../views/operate_root'),
+			// 	meta: {
+			// 		title: '权限操作',
+			// 	}
+			// },
 			// {
 			// 	path: 'operate_user',
 			// 	component: () => import('../views/operate_user'),
@@ -143,6 +143,10 @@ router.afterEach((to, from) => {
 	}
 	if(to.path == '/index/home'){
 		return store.vuex('$menu_current','/index')
+	}
+	//清除上一次登录的缓存
+	if(to.path == '/login'){
+		localStorage.clear()
 	}
 })
 export default router

@@ -475,6 +475,12 @@
 			console.log(res)
 			getTableJson()
 			dialogVisible.value = false
+			//再次调获取用户的权限的接口
+			let url = store.$url.roots_url
+			store.$api.get(url).then(res => {
+				//将该用户下的所有权限重新写入至vuex
+				store.vuex('$permissions', res.data)
+			})
 			// 通过事件总线发射全局事件 让侧边栏刷新
 			store.$bus.emit('refreshSide')
 		})
